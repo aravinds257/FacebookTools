@@ -1,0 +1,7 @@
+.venv/
+scraper_env/
+__pycache__/
+state.json
+seen_urls.txt
+scraper_log.txt
+.DS_Store
