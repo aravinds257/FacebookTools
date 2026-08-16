@@ -101,8 +101,10 @@ async def fetch_single_target(page, search_query: str, location_slug: str, dista
         pass
 
     try:
-    # Give the page 2 seconds to render tiles after scroll
-    await page.wait_for_timeout(2000)
+        await page.evaluate("window.scrollBy(0, 800)")
+        await page.wait_for_timeout(2000)
+    except Exception:
+        pass
 
     js_code = """
     () => {
