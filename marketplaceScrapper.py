@@ -105,6 +105,15 @@ def parse_gemini_to_json(analysis_text: str, max_price: int) -> list:
             url_match = re.search(r'https?://\S+', cells[-1] if len(cells) > 5 else "")
             url = url_match.group(0).rstrip(')') if url_match else "#"
 
+            # Gemini Verdict — second-to-last cell (before link)
+            verdict = ""
+            if len(cells) >= 3:
+                # Verdict is the cell just before the last URL cell
+                verdict_cell = cells[-2] if len(cells) > 6 else cells[-1]
+                # Clean up any markdown link syntax
+                verdict = re.sub(r'\[.*?\]\(.*?\)', '', verdict_cell).strip()
+                verdict = verdict[:300]  # Cap length
+
             # Platform detection
             platform = "facebook" if "facebook" in url else "gumtree"
 
@@ -129,6 +138,7 @@ def parse_gemini_to_json(analysis_text: str, max_price: int) -> list:
                 "specs": specs[:120],
                 "motherboard": "AMD AM5 (Upgradeable 2027+)" if socket == "am5" else "Intel Z790 (PCIe 5.0)",
                 "location": location,
+                "verdict": verdict,
                 "url": url
             })
             uid += 1
@@ -186,6 +196,8 @@ def save_and_push_deals(deals: list):
         print("[Dashboard] Live at: https://aravinds257.github.io/FacebookTools/", flush=True)
     except subprocess.CalledProcessError as e:
         print(f"[Dashboard] Git push failed: {e.stderr.decode() if e.stderr else str(e)}", flush=True)
+
+    return len(new_deals)  # Return count so caller knows if truly new deals were found
 
 
 def send_pushover(title: str, message: str):
@@ -392,8 +404,8 @@ Your goal is to find DESKTOP PCs ON SALE (UNDER £{max_price}) that fulfill KEY 
 4. **PCSPECIALIST PRICE COMPARISON (CRITICAL)**:
    For every deal found, calculate the estimated brand-new equivalent build price if configured on **PCSpecialist (or Amazon UK)**, and calculate the **Savings (£)**.
 
-5. Output a structured Markdown table of the TOP DEALS UNDER £{max_price}:
-   | Source | Marketplace Price (£) | Complete Specs & Motherboard (Focus on Upgradeability) | Location | Estimated PCSpecialist Brand New Price (£) | Your Savings (£) | Value Rating /10 | Listing Link |
+5. Output a structured Markdown table of the TOP DEALS UNDER £{max_price}. You MUST include ALL of these columns in this exact order:
+   | Source | Marketplace Price (£) | Complete Specs & Motherboard (Focus on Upgradeability) | Location | Estimated PCSpecialist Brand New Price (£) | Your Savings (£) | Value Rating /10 | Gemini Verdict (1 sentence: WHY this score — mention socket, upgrade path, GPU value, and savings) | Listing Link |
 """
 
     prompt = f"{system_instruction}\n\nHere is the combined raw text dump from Gumtree and Facebook Marketplace listings in London (5km) and Woking (20km):\n\n{raw_listings}\n\nPlease evaluate these listings and provide your top full UK PC deal recommendations under £{max_price}."
@@ -451,14 +463,25 @@ async def run_search(query: str, api_key: str, max_price: int = 1200):
         print(f"\n=== GEMINI COMBINED UK DEAL APPRAISAL (MAX £{max_price}) ===", flush=True)
         print(analysis, flush=True)
         
-        # Send Pushover notification if credentials are provided
-        send_pushover(f"New PC Deals Under £{max_price}", analysis)
-        
         # Parse results and auto-update the GitHub Pages web dashboard
         deals = parse_gemini_to_json(analysis, max_price)
+        new_deal_count = 0
         if deals:
-            save_and_push_deals(deals)
-        
+            new_deal_count = save_and_push_deals(deals) or 0
+
+        # Only send Pushover notification if genuinely NEW PCs were found (not seen before)
+        if new_deal_count > 0:
+            summary_lines = []
+            for d in deals[:new_deal_count]:
+                summary_lines.append(
+                    f"🔥 £{d['price']} | {d['title'][:60]}\n"
+                    f"   ★{d['rating']}/10 — {d.get('verdict', '')[:100]}"
+                )
+            pushover_msg = f"{new_deal_count} NEW PC deal(s) just posted!\n\n" + "\n\n".join(summary_lines)
+            send_pushover(f"🖥️ {new_deal_count} New PC Deal(s) Found!", pushover_msg)
+        else:
+            print("[Pushover] No new unique deals — notification skipped.", flush=True)
+
     except Exception as e:
         print(f"[Error] Gemini API evaluation failed: {e}", flush=True)
 
