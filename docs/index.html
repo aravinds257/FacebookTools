@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK PC Hardware Deals Radar | London & Woking</title>
+    <meta name="description" content="Live tracker for future-proof PC deals on Gumtree & Facebook Marketplace in London & Woking with DDR5 and AM5/LGA1700 upgrade paths.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0b0f17;
+            --bg-surface: #131b2e;
+            --bg-surface-elevated: #1a243d;
+            --border-subtle: #243254;
+            --border-highlight: #3b82f6;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --badge-am5: #059669;
+            --badge-intel: #2563eb;
+            --radius-lg: 14px;
+            --radius-md: 10px;
+            --radius-sm: 6px;
+            --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(180deg, rgba(19, 27, 46, 0.8) 0%, rgba(11, 15, 23, 0.4) 100%);
+            border-bottom: 1px solid var(--border-subtle);
+            backdrop-filter: blur(12px);
+            padding: 24px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .radar-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 18px;
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.35);
+        }
+
+        .brand-text h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+        }
+
+        .brand-text p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .stats-badge {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background: var(--bg-surface);
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border-subtle);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-emerald);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px var(--accent-emerald);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        main {
+            max-width: 1200px;
+            width: 100%;
+            margin: 32px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* Controls Section */
+        .controls-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-input-wrap {
+            flex: 1;
+            min-width: 260px;
+            position: relative;
+        }
+
+        .search-input-wrap input {
+            width: 100%;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 10px 16px 10px 40px;
+            font-size: 14px;
+            color: var(--text-main);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input-wrap input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            pointer-events: none;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover {
+            color: var(--text-main);
+            border-color: var(--text-dim);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-blue);
+            color: #ffffff;
+            border-color: var(--accent-blue);
+        }
+
+        .sort-select {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            padding: 9px 14px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Deals Grid */
+        .deals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .deal-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deal-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 16px 30px -10px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+            gap: 12px;
+        }
+
+        .platform-badge {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .platform-gumtree {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .platform-facebook {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .score-pill {
+            background: var(--bg-surface-elevated);
+            border: 1px solid var(--border-subtle);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 700;
+            color: #fbbf24;
+        }
+
+        .deal-title {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #ffffff;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .deal-location {
+            font-size: 12px;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 16px;
+        }
+
+        /* Specs breakdown */
+        .specs-box {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            margin-bottom: 16px;
+        }
+
+        .spec-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .spec-row:last-child {
+            border-bottom: none;
+        }
+
+        .spec-label {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .spec-val {
+            font-weight: 600;
+            color: var(--text-main);
+            text-align: right;
+        }
+
+        .platform-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .platform-tag.am5 {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .platform-tag.intel {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        /* Pricing Section */
+        .price-section {
+            background: var(--bg-surface-elevated);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            margin-bottom: 18px;
+        }
+
+        .price-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+
+        .market-price {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .new-price-wrap {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        .new-price-val {
+            text-decoration: line-through;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        .savings-bar-wrap {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .savings-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399);
+            border-radius: 999px;
+        }
+
+        .savings-tag {
+            font-size: 12px;
+            font-weight: 700;
+            color: #34d399;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Action button */
+        .card-btn {
+            display: block;
+            width: 100%;
+            background: #2563eb;
+            color: #ffffff;
+            text-align: center;
+            padding: 11px 16px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .card-btn:hover {
+            background: #1d4ed8;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Empty state */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--bg-surface);
+            border: 1px dashed var(--border-subtle);
+            border-radius: var(--radius-lg);
+            color: var(--text-muted);
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: auto;
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="brand">
+                <div class="radar-icon">⚡</div>
+                <div class="brand-text">
+                    <h1>UK PC Hardware Radar</h1>
+                    <p>Live DDR5 & Upgradeable Motherboard Hunt &bull; London (5mi) & Woking (20mi)</p>
+                </div>
+            </div>
+            <div class="stats-badge">
+                <span class="pulse-dot"></span>
+                <span id="deal-count">Loading Live Deals...</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="controls-card">
+            <div class="search-input-wrap">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" placeholder="Search CPU, GPU, or Motherboard...">
+            </div>
+            <div class="filter-group">
+                <button class="filter-btn active" data-filter="all">All Platforms</button>
+                <button class="filter-btn" data-filter="am5">AMD AM5 Only</button>
+                <button class="filter-btn" data-filter="intel">Intel LGA1700</button>
+                <button class="filter-btn" data-filter="gumtree">Gumtree</button>
+                <button class="filter-btn" data-filter="facebook">Facebook</button>
+            </div>
+            <select class="sort-select" id="sort-select">
+                <option value="savings">Sort: Highest Savings (£)</option>
+                <option value="price-low">Sort: Price (Lowest First)</option>
+                <option value="score">Sort: Value Rating</option>
+            </select>
+        </div>
+
+        <div class="deals-grid" id="deals-container">
+            <!-- Rendered dynamically -->
+        </div>
+    </main>
+
+    <footer>
+        <p>Automated with Playwright, Google Gemini & PCSpecialist Benchmarks &bull; Updated Every 4 Hours</p>
+    </footer>
+
+    <script>
+        // Default seed data (live backup from recent scraper run)
+        const defaultDeals = [
+            {
+                id: "1",
+                title: "Gaming PC / Ryzen 5 9600x / RTX 5070 [12GB] / 32GB DDR5 / 1TB Gen4 SSD",
+                price: 1199,
+                newPrice: 1750,
+                savings: 551,
+                rating: 9.9,
+                platform: "gumtree",
+                socket: "am5",
+                specs: "Ryzen 5 9600X • RTX 5070 12GB • 32GB DDR5 • 1TB Gen4 NVMe",
+                motherboard: "AMD AM5 (Next-Gen Ready)",
+                location: "SE London (5 miles)",
+                url: "https://www.gumtree.com/p/desktop-workstation-pcs/gaming-pc-ryzen-5-9600x-rtx-5070-12gb-32gb-ddr5-1tb-gen4-ssd/1515606397"
+            },
+            {
+                id: "2",
+                title: "Gaming PC, RTX 4070 SUPER, 32GB DDR5, Ryzen 5 7600X",
+                price: 1099,
+                newPrice: 1500,
+                savings: 401,
+                rating: 9.6,
+                platform: "gumtree",
+                socket: "am5",
+                specs: "Ryzen 5 7600X • RTX 4070 SUPER • 32GB DDR5 • 1TB NVMe",
+                motherboard: "AMD AM5 (Upgradeable to 2027+)",
+                location: "Wembley, London (5 miles)",
+                url: "https://www.gumtree.com/p/desktop-workstation-pcs/gaming-pc-rtx-4070-super-32gb-ddr5-ryzen-5-7600x/1801283057"
+            },
+            {
+                id: "3",
+                title: "Custom Gaming PC - Ryzen 5 7600, RTX 3080 Ti, 16gb ddr5 ram, 2tb storage",
+                price: 1000,
+                newPrice: 1450,
+                savings: 450,
+                rating: 9.5,
+                platform: "gumtree",
+                socket: "am5",
+                specs: "Ryzen 5 7600 • RTX 3080 Ti 12GB • 16GB DDR5 • 2TB Storage",
+                motherboard: "AMD AM5 (DDR5 Platform)",
+                location: "Reading / Woking Area (20 miles)",
+                url: "https://www.gumtree.com/p/desktop-workstation-pcs/custom-gaming-pc-ryzen-5-7600-rtx-3080-ti-16gb-ddr5-ram-2tb-storage/1800196501"
+            },
+            {
+                id: "4",
+                title: "Full Black Panoramic PC – RTX 5060 Ti / Ryzen 5 7600X / 32GB DDR5 / WiFi",
+                price: 1049,
+                newPrice: 1350,
+                savings: 301,
+                rating: 9.2,
+                platform: "facebook",
+                socket: "am5",
+                specs: "Ryzen 5 7600X • RTX 5060 Ti • 32GB DDR5 • WiFi Board",
+                motherboard: "AMD AM5 (B650 / PCIe 5.0)",
+                location: "London (5 miles)",
+                url: "https://www.facebook.com/marketplace/item/1089159203564956/"
+            },
+            {
+                id: "5",
+                title: "Gaming Desktop/PC 4070ti - i7 13700k - 32 GB DDR5 - 2TB SSD",
+                price: 1200,
+                newPrice: 2050,
+                savings: 850,
+                rating: 9.8,
+                platform: "facebook",
+                socket: "intel",
+                specs: "i7-13700K • RTX 4070 Ti 12GB • 32GB DDR5 • 2TB NVMe",
+                motherboard: "Intel Z790 (PCIe 5.0 Support)",
+                location: "London (5 miles)",
+                url: "https://www.facebook.com/marketplace/item/871989322404487/"
+            },
+            {
+                id: "6",
+                title: "Fast Gaming PC – AM5 / DDR5 – Ready to Play Custom Build",
+                price: 850,
+                newPrice: 1100,
+                savings: 250,
+                rating: 8.8,
+                platform: "gumtree",
+                socket: "am5",
+                specs: "AM5 Modern Processor • DDR5 RAM • Fast NVMe SSD",
+                motherboard: "AMD AM5 (Low Entry Base)",
+                location: "Woking / Surrey (20 miles)",
+                url: "https://www.gumtree.com/p/desktop-workstation-pcs/fast-gaming-pc-am5-ddr5-ready-to-play/1511022897"
+            }
+        ];
+
+        let activeDeals = [...defaultDeals];
+        let currentFilter = 'all';
+
+        async function fetchLiveDeals() {
+            try {
+                const res = await fetch('deals.json?t=' + Date.now());
+                if (res.ok) {
+                    const data = await res.json();
+                    if (Array.isArray(data) && data.length > 0) {
+                        activeDeals = data;
+                    }
+                }
+            } catch (err) {
+                console.log("Using preloaded default deal cache.");
+            }
+            renderDeals();
+        }
+
+        function renderDeals() {
+            const container = document.getElementById('deals-container');
+            const searchVal = document.getElementById('search-input').value.toLowerCase();
+            const sortBy = document.getElementById('sort-select').value;
+
+            let filtered = activeDeals.filter(d => {
+                const matchesSearch = d.title.toLowerCase().includes(searchVal) ||
+                                      d.specs.toLowerCase().includes(searchVal) ||
+                                      d.motherboard.toLowerCase().includes(searchVal);
+
+                if (!matchesSearch) return false;
+
+                if (currentFilter === 'am5') return d.socket === 'am5';
+                if (currentFilter === 'intel') return d.socket === 'intel';
+                if (currentFilter === 'gumtree') return d.platform === 'gumtree';
+                if (currentFilter === 'facebook') return d.platform === 'facebook';
+                return true;
+            });
+
+            if (sortBy === 'savings') {
+                filtered.sort((a, b) => b.savings - a.savings);
+            } else if (sortBy === 'price-low') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sortBy === 'score') {
+                filtered.sort((a, b) => b.rating - a.rating);
+            }
+
+            document.getElementById('deal-count').textContent = `${filtered.length} Live Qualifying Deals`;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No matching deals found</h3>
+                        <p>Try adjusting your search terms or filter criteria.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(d => {
+                const percentSaved = Math.round((d.savings / d.newPrice) * 100);
+                const platformClass = d.platform === 'gumtree' ? 'platform-gumtree' : 'platform-facebook';
+                const platformLabel = d.platform === 'gumtree' ? '🌿 Gumtree' : '📘 Facebook';
+                const socketBadge = d.socket === 'am5' ? '<span class="platform-tag am5">AMD AM5</span>' : '<span class="platform-tag intel">Intel LGA1700</span>';
+
+                return `
+                    <div class="deal-card">
+                        <div>
+                            <div class="card-top">
+                                <span class="platform-badge ${platformClass}">${platformLabel}</span>
+                                <span class="score-pill">★ ${d.rating} / 10</span>
+                            </div>
+                            <h2 class="deal-title">${d.title}</h2>
+                            <div class="deal-location">📍 ${d.location}</div>
+
+                            <div class="specs-box">
+                                <div class="spec-row">
+                                    <span class="spec-label">Motherboard:</span>
+                                    <span class="spec-val">${socketBadge}</span>
+                                </div>
+                                <div class="spec-row">
+                                    <span class="spec-label">Platform Info:</span>
+                                    <span class="spec-val">${d.motherboard}</span>
+                                </div>
+                                <div class="spec-row">
+                                    <span class="spec-label">Core Hardware:</span>
+                                    <span class="spec-val">${d.specs}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="price-section">
+                                <div class="price-header">
+                                    <div class="market-price">£${d.price.toLocaleString()}</div>
+                                    <div class="new-price-wrap">
+                                        PCSpecialist: <span class="new-price-val">£${d.newPrice.toLocaleString()}</span>
+                                    </div>
+                                </div>
+                                <div class="savings-bar-wrap">
+                                    <div class="savings-bar" style="width: ${Math.min(percentSaved, 100)}%;"></div>
+                                </div>
+                                <div class="savings-tag">
+                                    <span>💰 Cash Savings:</span>
+                                    <span>£${d.savings.toLocaleString()} (${percentSaved}% OFF)</span>
+                                </div>
+                            </div>
+
+                            <a href="${d.url}" target="_blank" rel="noopener" class="card-btn">
+                                View Deal Listing &rarr;
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Event Listeners
+        document.getElementById('search-input').addEventListener('input', renderDeals);
+        document.getElementById('sort-select').addEventListener('change', renderDeals);
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.getAttribute('data-filter');
+                renderDeals();
+            });
+        });
+
+        // Initialize
+        fetchLiveDeals();
+    </script>
+</body>
+</html>
