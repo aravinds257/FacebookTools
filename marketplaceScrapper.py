@@ -100,25 +100,23 @@ async def fetch_gumtree_items(page, search_query: str, location_slug: str, radiu
 
     try:
         await page.evaluate("window.scrollBy(0, 800)")
-        await page.wait_for_timeout(1000)
-        await page.evaluate("window.scrollBy(0, 800)")
-        await page.wait_for_timeout(1000)
+        await page.wait_for_timeout(2000)
     except Exception:
         pass
 
     js_code = """
     () => {
         const listings = [];
-        document.querySelectorAll('article[data-q="search-result"]').forEach(item => {
-            const titleEl = item.querySelector('div[data-q="tile-title"]');
-            const priceEl = item.querySelector('div[data-q="tile-price"]');
-            const locEl = item.querySelector('div[data-q="tile-location"]');
+        document.querySelectorAll('article').forEach(item => {
+            const titleEl = item.querySelector('[data-q="tile-title"]') || item.querySelector('h2') || item.querySelector('h3');
+            const priceEl = item.querySelector('[data-q="tile-price"]') || item.querySelector('span[data-q="price"]');
+            const locEl = item.querySelector('[data-q="tile-location"]');
             const linkEl = item.querySelector('a');
             
-            if(titleEl && priceEl && linkEl) {
-                const title = titleEl.innerText.trim();
-                const price = priceEl.innerText.trim();
-                const loc = locEl ? locEl.innerText.trim() : "Unknown";
+            if(linkEl && linkEl.href && (titleEl || priceEl)) {
+                const title = titleEl ? titleEl.innerText.trim() : "Custom PC";
+                const price = priceEl ? priceEl.innerText.trim() : "£0";
+                const loc = locEl ? locEl.innerText.trim() : "UK Local";
                 const url = linkEl.href;
                 listings.push(`[GUMTREE] Listing: ${price} | ${title} | ${loc}\\nURL: ${url}`);
             }
