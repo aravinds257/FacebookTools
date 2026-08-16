@@ -1,7 +1,10 @@
 import os
 import sys
 import re
+import json
 import asyncio
+import datetime
+import subprocess
 import urllib.parse
 import urllib.request
 from playwright.async_api import async_playwright
@@ -52,6 +55,137 @@ def filter_new_listings(raw_listings: str) -> str:
                 f.write(u + '\n')
                 
     return "\n--- New Listing ---\n".join(filtered_listings)
+
+
+def parse_gemini_to_json(analysis_text: str, max_price: int) -> list:
+    """Parses Gemini's markdown table output into a list of deal JSON objects for the web dashboard."""
+    deals = []
+    lines = analysis_text.split('\n')
+    header_found = False
+    uid = 1
+
+    for line in lines:
+        line = line.strip()
+        # Skip separators and header rows
+        if not line.startswith('|') or '---' in line:
+            continue
+        if 'Marketplace Price' in line or 'Price (£)' in line:
+            header_found = True
+            continue
+        if not header_found:
+            continue
+
+        # Split and strip table cells
+        cells = [c.strip() for c in line.split('|') if c.strip()]
+        if len(cells) < 5:
+            continue
+
+        try:
+            # Extract marketplace price (first number found)
+            price_raw = re.sub(r'[^0-9]', '', cells[0].split()[0])
+            if not price_raw:
+                continue
+            price = int(price_raw)
+            if price > max_price or price < 100:
+                continue
+
+            specs = cells[1] if len(cells) > 1 else "Unknown Specs"
+            location = cells[2] if len(cells) > 2 else "UK Local"
+            
+            # PCSpecialist price
+            new_price_raw = re.sub(r'[^0-9]', '', cells[3].split()[0]) if len(cells) > 3 else ""
+            new_price = int(new_price_raw) if new_price_raw else price + 400
+            savings = max(new_price - price, 0)
+
+            # Rating
+            rating_raw = re.findall(r'(\d+\.?\d*)', cells[4] if len(cells) > 4 else "")
+            rating = float(rating_raw[0]) if rating_raw else 7.0
+
+            # URL (last cell)
+            url_match = re.search(r'https?://\S+', cells[-1] if len(cells) > 5 else "")
+            url = url_match.group(0).rstrip(')') if url_match else "#"
+
+            # Platform detection
+            platform = "facebook" if "facebook" in url else "gumtree"
+
+            # Socket detection from specs
+            specs_lower = specs.lower()
+            if any(x in specs_lower for x in ['am5', 'x670', 'b650', 'x870', 'b850', 'ryzen 7', 'ryzen 9', 'ryzen 5 7', 'ryzen 5 9']):
+                socket = "am5"
+            elif any(x in specs_lower for x in ['z790', 'z690', 'b760', 'i7-13', 'i9-13', 'i7-14', 'i9-14', 'lga1700', 'lga1851']):
+                socket = "intel"
+            else:
+                socket = "am5"  # Default assumption for DDR5
+
+            deals.append({
+                "id": str(uid),
+                "title": specs[:120],
+                "price": price,
+                "newPrice": new_price,
+                "savings": savings,
+                "rating": round(rating, 1),
+                "platform": platform,
+                "socket": socket,
+                "specs": specs[:120],
+                "motherboard": "AMD AM5 (Upgradeable 2027+)" if socket == "am5" else "Intel Z790 (PCIe 5.0)",
+                "location": location,
+                "url": url
+            })
+            uid += 1
+        except Exception:
+            continue
+
+    return deals
+
+
+def save_and_push_deals(deals: list):
+    """Saves deals to docs/deals.json and auto-pushes to GitHub to update the live web dashboard."""
+    repo_root = os.path.dirname(os.path.abspath(__file__))
+    docs_dir = os.path.join(repo_root, "docs")
+    json_path = os.path.join(docs_dir, "deals.json")
+
+    if not os.path.exists(docs_dir):
+        os.makedirs(docs_dir)
+
+    # Load existing deals, merge in new ones (avoid duplicates by URL)
+    existing = []
+    if os.path.exists(json_path):
+        try:
+            with open(json_path, 'r') as f:
+                existing = json.load(f)
+        except Exception:
+            existing = []
+
+    existing_urls = {d.get('url', '') for d in existing}
+    new_deals = [d for d in deals if d.get('url', '') not in existing_urls]
+
+    if not new_deals:
+        print("[Dashboard] No new deals to add to the web dashboard.", flush=True)
+        return
+
+    merged = new_deals + existing  # New deals appear first
+    merged = merged[:50]  # Keep max 50 deals on the dashboard
+
+    # Add a last_updated timestamp
+    for d in merged:
+        if 'last_updated' not in d:
+            d['last_updated'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
+
+    with open(json_path, 'w') as f:
+        json.dump(merged, f, indent=2)
+
+    print(f"[Dashboard] Saved {len(new_deals)} new deals to docs/deals.json ({len(merged)} total).", flush=True)
+
+    # Auto-commit and push to GitHub
+    try:
+        subprocess.run(["git", "-C", repo_root, "add", "docs/deals.json"], check=True, capture_output=True)
+        commit_msg = f"Auto-update deals: {len(new_deals)} new ({datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')})"
+        subprocess.run(["git", "-C", repo_root, "commit", "-m", commit_msg], check=True, capture_output=True)
+        subprocess.run(["git", "-C", repo_root, "push"], check=True, capture_output=True)
+        print("[Dashboard] Successfully pushed updated deals.json to GitHub! 🚀", flush=True)
+        print("[Dashboard] Live at: https://aravinds257.github.io/FacebookTools/", flush=True)
+    except subprocess.CalledProcessError as e:
+        print(f"[Dashboard] Git push failed: {e.stderr.decode() if e.stderr else str(e)}", flush=True)
 
 
 def send_pushover(title: str, message: str):
@@ -319,6 +453,11 @@ async def run_search(query: str, api_key: str, max_price: int = 1200):
         
         # Send Pushover notification if credentials are provided
         send_pushover(f"New PC Deals Under £{max_price}", analysis)
+        
+        # Parse results and auto-update the GitHub Pages web dashboard
+        deals = parse_gemini_to_json(analysis, max_price)
+        if deals:
+            save_and_push_deals(deals)
         
     except Exception as e:
         print(f"[Error] Gemini API evaluation failed: {e}", flush=True)
