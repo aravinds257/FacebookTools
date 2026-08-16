@@ -131,8 +131,8 @@ async def fetch_single_target(page, search_query: str, location_slug: str, dista
 
 async def fetch_marketplace_items(search_query: str = "PC DDR5", max_price: int = 1200) -> str:
     targets = [
-        {"slug": "london", "distance_miles": 3},   # ~5 km
-        {"slug": "woking", "distance_miles": 12},  # ~20 km
+        {"slug": "london", "distance_miles": 5},   # 5 miles
+        {"slug": "woking", "distance_miles": 20},  # 20 miles
     ]
     
     print(f"[1/5] Launching Chromium browser (Max Budget: £{max_price})...", flush=True)
@@ -164,13 +164,13 @@ async def fetch_marketplace_items(search_query: str = "PC DDR5", max_price: int 
         await browser.close()
         
         combined = "\n--- New Listing ---\n".join(all_results)
-        print(f"[4/5] Extracted {len(combined)} characters across London (5km) & Woking (20km).", flush=True)
+        print(f"[4/5] Extracted {len(combined)} characters across London (5 miles) & Woking (20 miles).", flush=True)
         return combined[:15000]
 
 
 def analyze_with_gemini(raw_listings: str, api_key: str, search_query: str, max_price: int = 1200) -> str:
     """Uses Google Gemini API to appraise UK full Gaming PC deals with DDR5, PCIe 5.0, and PCSpecialist brand new price comparisons."""
-    system_instruction = f"""You are an expert UK PC Hardware Appraisal Agent evaluating DESKTOP PCs in London (5km radius) and Woking (20km radius), UK.
+    system_instruction = f"""You are an expert UK PC Hardware Appraisal Agent evaluating DESKTOP PCs in London (5 miles radius) and Woking (20 miles radius), UK.
 STRICT BUDGET CONDITION: ALL LISTINGS EVALUATED MUST BE PRICED AT OR BELOW £{max_price} GBP. DISCARD ANY LISTING OVER £{max_price} GBP.
 STRICT LOCATION REQUIREMENT: All listings evaluated MUST be located in the UK in Pounds (£). Ignore any US listings.
 
@@ -238,7 +238,7 @@ Your goal is to find DESKTOP PCs ON SALE (UNDER £{max_price}) that fulfill KEY 
 
 async def run_search(query: str, api_key: str, max_price: int = 1200):
     print(f"\n==================================================", flush=True)
-    print(f" SEARCHING GUMTREE UK PCs (MAX £{max_price}): '{query}' | London (5km) + Woking (20km)", flush=True)
+    print(f" SEARCHING GUMTREE UK PCs (MAX £{max_price}): '{query}' | London (5 miles) + Woking (20 miles)", flush=True)
     print(f"==================================================", flush=True)
 
     raw_listings = await fetch_marketplace_items(search_query=query, max_price=max_price)
@@ -246,7 +246,7 @@ async def run_search(query: str, api_key: str, max_price: int = 1200):
     new_listings = filter_new_listings(raw_listings)
 
     if not new_listings or len(new_listings.strip()) < 50:
-        print(f"[Notice] No NEW UK listings found under £{max_price} in London (5km) or Woking (20km). Skipping AI analysis.", flush=True)
+        print(f"[Notice] No NEW UK listings found under £{max_price} in London (5 miles) or Woking (20 miles). Skipping AI analysis.", flush=True)
         return
 
     print(f"[5/5] Analyzing {len(new_listings.split('--- New Listing ---'))} NEW listings using Google Gemini...", flush=True)
