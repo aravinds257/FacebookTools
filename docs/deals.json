@@ -12,7 +12,8 @@
     "motherboard": "AMD AM5 (Latest Zen 5 Platform)",
     "location": "SE London (5 miles)",
     "url": "https://www.gumtree.com/p/desktop-workstation-pcs/gaming-pc-ryzen-5-9600x-rtx-5070-12gb-32gb-ddr5-1tb-gen4-ssd/1515606397",
-    "date_added": "2026-08-16"
+    "date_added": "2026-08-16",
+    "verdict": "Excellent AM5 platform with Zen 5 CPU and RTX 5070 \u2014 saves over \u00a3550 vs PCSpecialist new build; swap GPU freely in future."
   },
   {
     "id": "2",
@@ -27,7 +28,8 @@
     "motherboard": "AMD AM5 (Supported through 2027+)",
     "location": "Wembley, London (5 miles)",
     "url": "https://www.gumtree.com/p/desktop-workstation-pcs/gaming-pc-rtx-4070-super-32gb-ddr5-ryzen-5-7600x/1801283057",
-    "date_added": "2026-08-16"
+    "date_added": "2026-08-16",
+    "verdict": "Strong AM5 foundation with 7600X and 4070 SUPER; platform supported until 2027+ and saves \u00a3401 vs new build from PCSpecialist."
   },
   {
     "id": "3",
@@ -42,7 +44,8 @@
     "motherboard": "AMD AM5 (DDR5 Foundation)",
     "location": "Reading / Woking Area (20 miles)",
     "url": "https://www.gumtree.com/p/desktop-workstation-pcs/custom-gaming-pc-ryzen-5-7600-rtx-3080-ti-16gb-ddr5-ram-2tb-storage/1800196501",
-    "date_added": "2026-08-16"
+    "date_added": "2026-08-16",
+    "verdict": "Great value AM5 DDR5 base with premium 3080 Ti GPU included; ideal upgrade-first strategy saving \u00a3450 vs new equivalent."
   },
   {
     "id": "4",
@@ -57,7 +60,8 @@
     "motherboard": "AMD AM5 (PCIe 5.0 Ready)",
     "location": "London (5 miles)",
     "url": "https://www.facebook.com/marketplace/item/1089159203564956/",
-    "date_added": "2026-08-16"
+    "date_added": "2026-08-16",
+    "verdict": "Solid AM5 next-gen GPU pick with RTX 5060 Ti; PCIe 5.0 ready motherboard makes future GPU swaps seamless at \u00a31049."
   },
   {
     "id": "5",
@@ -72,7 +76,8 @@
     "motherboard": "Intel Z790 (PCIe 5.0 NVMe/GPU)",
     "location": "London (5 miles)",
     "url": "https://www.facebook.com/marketplace/item/871989322404487/",
-    "date_added": "2026-08-16"
+    "date_added": "2026-08-16",
+    "verdict": "Top-tier Intel Z790 build with 13700K and 4070 Ti; excellent PCIe 5.0 NVMe support and saves \u00a3850 vs PCSpecialist equivalent."
   },
   {
     "id": "6",
@@ -87,6 +92,7 @@
     "motherboard": "AMD AM5 (Entry Level DDR5)",
     "location": "Woking / Surrey (20 miles)",
     "url": "https://www.gumtree.com/p/desktop-workstation-pcs/fast-gaming-pc-am5-ddr5-ready-to-play/1511022897",
-    "date_added": "2026-08-16"
+    "date_added": "2026-08-16",
+    "verdict": "Budget-friendly AM5 DDR5 entry point in Woking area; lowest cost path to an upgradeable modern platform saving \u00a3250."
   }
 ]
