@@ -191,7 +191,12 @@ async def fetch_facebook_items(page, search_query: str, location_slug: str, radi
     return await page.evaluate(js_code, max_price)
 
 
-async def fetch_both_marketplaces(search_query: str, location_slug: str, radius_km: int, max_price: int) -> str:
+async def fetch_both_marketplaces(search_query: str, max_price: int) -> str:
+    targets = [
+        {"slug": "london", "name": "London", "radius_km": 5, "distance_miles": 3},
+        {"slug": "woking", "name": "Woking", "radius_km": 20, "distance_miles": 12},
+    ]
+
     print(f"[1/5] Launching Chromium browser (Max Budget: £{max_price})...", flush=True)
     async with async_playwright() as p:
         browser = await p.chromium.launch(
@@ -216,24 +221,35 @@ async def fetch_both_marketplaces(search_query: str, location_slug: str, radius_
         context = await browser.new_context(**context_args)
         page = await context.new_page()
 
-        print("[2/5] Fetching from Gumtree UK...", flush=True)
-        gumtree_text = await fetch_gumtree_items(page, search_query, location_slug, radius_km, max_price)
-        
-        print("[3/5] Fetching from Facebook Marketplace UK...", flush=True)
-        facebook_text = await fetch_facebook_items(page, search_query, location_slug, radius_km, max_price)
+        all_gumtree = []
+        all_facebook = []
+
+        for t in targets:
+            print(f"[2/5] Fetching Gumtree UK: {t['name']} ({t['distance_miles']} miles)...", flush=True)
+            g_text = await fetch_gumtree_items(page, search_query, t["slug"], t["distance_miles"], max_price)
+            if g_text:
+                all_gumtree.append(g_text)
+
+            print(f"[3/5] Fetching Facebook Marketplace UK: {t['name']} ({t['radius_km']} km)...", flush=True)
+            fb_text = await fetch_facebook_items(page, search_query, t["slug"], t["radius_km"], max_price)
+            if fb_text:
+                all_facebook.append(fb_text)
 
         await browser.close()
         
-        combined = ""
-        if gumtree_text: combined += gumtree_text + "\n--- New Listing ---\n"
-        if facebook_text: combined += facebook_text
-        
-        print(f"[4/5] Extracted {len(combined)} characters of combined UK Local listings.", flush=True)
+        combined_parts = []
+        if all_gumtree:
+            combined_parts.extend(all_gumtree)
+        if all_facebook:
+            combined_parts.extend(all_facebook)
+
+        combined = "\n--- New Listing ---\n".join(combined_parts)
+        print(f"[4/5] Extracted {len(combined)} characters across London (5km) & Woking (20km).", flush=True)
         return combined[:15000]
 
 
-def analyze_with_gemini(raw_listings: str, api_key: str, search_query: str, location_slug: str, radius_km: int, max_price: int = 1200) -> str:
-    system_instruction = f"""You are an expert UK PC Hardware Appraisal Agent evaluating DESKTOP PCs (Focus on Upgradeable Foundation) in '{location_slug}', UK.
+def analyze_with_gemini(raw_listings: str, api_key: str, search_query: str, max_price: int = 1200) -> str:
+    system_instruction = f"""You are an expert UK PC Hardware Appraisal Agent evaluating DESKTOP PCs in London (5km radius) and Woking (20km radius), UK.
 STRICT BUDGET CONDITION: ALL LISTINGS EVALUATED MUST BE PRICED AT OR BELOW £{max_price} GBP. DISCARD ANY LISTING OVER £{max_price} GBP.
 
 Your goal is to find DESKTOP PCs ON SALE (UNDER £{max_price}) that fulfill KEY FUTURE-PROOF REQUIREMENTS:
@@ -248,7 +264,7 @@ Your goal is to find DESKTOP PCs ON SALE (UNDER £{max_price}) that fulfill KEY 
    | Source | Marketplace Price (£) | Complete Specs & Motherboard (Focus on Upgradeability) | Location | Estimated PCSpecialist Brand New Price (£) | Your Savings (£) | Value Rating /10 | Listing Link |
 """
 
-    prompt = f"{system_instruction}\n\nHere is the combined raw text dump from Gumtree and Facebook Marketplace listings:\n\n{raw_listings}\n\nPlease evaluate these listings and provide your top full UK PC deal recommendations under £{max_price}."
+    prompt = f"{system_instruction}\n\nHere is the combined raw text dump from Gumtree and Facebook Marketplace listings in London (5km) and Woking (20km):\n\n{raw_listings}\n\nPlease evaluate these listings and provide your top full UK PC deal recommendations under £{max_price}."
 
     if USE_SDK == "google-genai":
         client = genai.Client(api_key=api_key)
@@ -284,22 +300,22 @@ Your goal is to find DESKTOP PCs ON SALE (UNDER £{max_price}) that fulfill KEY 
         raise ImportError("No Google GenAI SDK installed.")
 
 
-async def run_search(location: str, query: str, radius: int, api_key: str, max_price: int = 1200):
+async def run_search(query: str, api_key: str, max_price: int = 1200):
     print(f"\n==================================================", flush=True)
-    print(f" SEARCHING GUMTREE + FACEBOOK UK PCs (MAX £{max_price}): '{query}'", flush=True)
+    print(f" SEARCHING GUMTREE + FACEBOOK UK PCs (MAX £{max_price}): '{query}' | London (5km) + Woking (20km)", flush=True)
     print(f"==================================================", flush=True)
 
-    raw_listings = await fetch_both_marketplaces(search_query=query, location_slug=location, radius_km=radius, max_price=max_price)
+    raw_listings = await fetch_both_marketplaces(search_query=query, max_price=max_price)
 
     new_listings = filter_new_listings(raw_listings)
 
     if not new_listings or len(new_listings.strip()) < 50:
-        print(f"[Notice] No NEW UK listings found under £{max_price} since the last run. Skipping AI analysis.", flush=True)
+        print(f"[Notice] No NEW UK listings found under £{max_price} in London (5km) or Woking (20km). Skipping AI analysis.", flush=True)
         return
 
     print(f"[5/5] Analyzing {len(new_listings.split('--- New Listing ---'))} NEW combined listings using Google Gemini...", flush=True)
     try:
-        analysis = analyze_with_gemini(new_listings, api_key, search_query=query, location_slug=location, radius_km=radius, max_price=max_price)
+        analysis = analyze_with_gemini(new_listings, api_key, search_query=query, max_price=max_price)
         print(f"\n=== GEMINI COMBINED UK DEAL APPRAISAL (MAX £{max_price}) ===", flush=True)
         print(analysis, flush=True)
         
@@ -322,7 +338,7 @@ async def main():
     if len(sys.argv) >= 4:
         max_price = int(sys.argv[3])
     
-    await run_search("london", query, 40, api_key, max_price=max_price)
+    await run_search(query, api_key, max_price=max_price)
 
 if __name__ == "__main__":
     asyncio.run(main())

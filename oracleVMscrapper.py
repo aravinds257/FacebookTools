@@ -82,16 +82,59 @@ def send_pushover(title: str, message: str):
         print(f"[Pushover] Failed to send notification: {e}", flush=True)
 
 
-async def fetch_marketplace_items(search_query: str = "gaming pc DDR5", location_slug: str = "london", radius_km: int = 40, max_price: int = 1200) -> str:
-    """Automates Playwright browser to fetch Local PC listings from Gumtree UK under max_price GBP.
-    Gumtree is used because it allows 24/7 automated scraping from cloud VMs (like Oracle) without login walls,
-    while still supporting local face-to-face viewing and cash negotiation.
-    """
+async def fetch_single_target(page, search_query: str, location_slug: str, distance_miles: int, max_price: int) -> str:
     encoded_query = urllib.parse.quote(search_query)
+    url = f"https://www.gumtree.com/search?search_category=desktop-workstation-pcs&search_location={location_slug}&q={encoded_query}&max_price={max_price}&distance={distance_miles}"
     
-    # Gumtree URL for Desktop Workstations/PCs
-    url = f"https://www.gumtree.com/search?search_category=desktop-workstation-pcs&search_location={location_slug}&q={encoded_query}&max_price={max_price}&distance={radius_km}"
+    print(f"[Gumtree] Searching {location_slug.title()} ({distance_miles} miles): {url}", flush=True)
+    try:
+        await page.goto(url, wait_until="domcontentloaded", timeout=15000)
+    except Exception as e:
+        print(f"[Warning] Page load timeout on {location_slug}: {e}", flush=True)
 
+    try:
+        btn = page.locator("button#onetrust-accept-btn-handler").first
+        if await btn.count() > 0 and await btn.is_visible():
+            await btn.click(timeout=3000)
+            await page.wait_for_timeout(1000)
+    except Exception:
+        pass
+
+    try:
+        await page.evaluate("window.scrollBy(0, 800)")
+        await page.wait_for_timeout(1000)
+    except Exception:
+        pass
+
+    js_code = """
+    () => {
+        const listings = [];
+        document.querySelectorAll('article[data-q="search-result"]').forEach(item => {
+            const titleEl = item.querySelector('div[data-q="tile-title"]');
+            const priceEl = item.querySelector('div[data-q="tile-price"]');
+            const locEl = item.querySelector('div[data-q="tile-location"]');
+            const linkEl = item.querySelector('a');
+            
+            if(titleEl && priceEl && linkEl) {
+                const title = titleEl.innerText.trim();
+                const price = priceEl.innerText.trim();
+                const loc = locEl ? locEl.innerText.trim() : "Unknown";
+                const url = linkEl.href;
+                listings.push(`[GUMTREE] Listing: ${price} | ${title} | ${loc}\\nURL: ${url}`);
+            }
+        });
+        return listings.join("\\n--- New Listing ---\\n");
+    }
+    """
+    return await page.evaluate(js_code)
+
+
+async def fetch_marketplace_items(search_query: str = "PC DDR5", max_price: int = 1200) -> str:
+    targets = [
+        {"slug": "london", "distance_miles": 3},   # ~5 km
+        {"slug": "woking", "distance_miles": 12},  # ~20 km
+    ]
+    
     print(f"[1/5] Launching Chromium browser (Max Budget: £{max_price})...", flush=True)
     async with async_playwright() as p:
         browser = await p.chromium.launch(
@@ -112,71 +155,22 @@ async def fetch_marketplace_items(search_query: str = "gaming pc DDR5", location
         )
         page = await context.new_page()
 
-        print(f"[2/5] Navigating to UK Local Classifieds (Gumtree):\n      Coverage Area='{location_slug} ({radius_km} miles)' | Query='{search_query}' | Max Price=£{max_price}\n      URL: {url}", flush=True)
-        try:
-            await page.goto(url, wait_until="networkidle", timeout=15000)
-        except Exception:
-            try:
-                await page.goto(url, wait_until="domcontentloaded", timeout=10000)
-            except Exception as e:
-                print(f"[Scraper Warning] Initial page load notice: {e}", flush=True)
+        all_results = []
+        for t in targets:
+            res = await fetch_single_target(page, search_query, t["slug"], t["distance_miles"], max_price)
+            if res:
+                all_results.append(res)
 
-        # Handle UK / EU Cookie Consent Dialogs on Gumtree
-        print("[3/5] Handling cookie consent...", flush=True)
-        try:
-            btn = page.locator("button#onetrust-accept-btn-handler").first
-            if await btn.count() > 0 and await btn.is_visible():
-                print("      Clicking Gumtree cookie consent button...", flush=True)
-                await btn.click(timeout=3000)
-                await page.wait_for_timeout(1500)
-        except Exception as e:
-            pass
-
-        # Scroll down slightly to trigger lazy loading
-        try:
-            await page.evaluate("window.scrollBy(0, 800)")
-            await page.wait_for_timeout(1000)
-            await page.evaluate("window.scrollBy(0, 800)")
-            await page.wait_for_timeout(1000)
-        except Exception:
-            pass
-
-        # JS Filter: Extract Gumtree Search Result Articles
-        js_code = """
-        () => {
-            const listings = [];
-            document.querySelectorAll('article[data-q="search-result"]').forEach(item => {
-                const titleEl = item.querySelector('div[data-q="tile-title"]');
-                const priceEl = item.querySelector('div[data-q="tile-price"]');
-                const locEl = item.querySelector('div[data-q="tile-location"]');
-                const linkEl = item.querySelector('a');
-                
-                if(titleEl && priceEl && linkEl) {
-                    const title = titleEl.innerText.trim();
-                    const price = priceEl.innerText.trim();
-                    const loc = locEl ? locEl.innerText.trim() : "Unknown";
-                    const url = linkEl.href;
-                    listings.push(`[GUMTREE] Listing: ${price} | ${title} | ${loc}\\nURL: ${url}`);
-                }
-            });
-            return listings.join("\\n--- New Listing ---\\n");
-        }
-        """
-
-        listings_text = await page.evaluate(js_code)
         await browser.close()
         
-        if not listings_text:
-            print("[Warning] No structured listings found on Gumtree.", flush=True)
-            return ""
-            
-        print(f"[4/5] Extracted {len(listings_text)} characters of STRICT UK Local listings (Filtered <= £{max_price}).", flush=True)
-        return listings_text[:12000]
+        combined = "\n--- New Listing ---\n".join(all_results)
+        print(f"[4/5] Extracted {len(combined)} characters across London (5km) & Woking (20km).", flush=True)
+        return combined[:15000]
 
 
-def analyze_with_gemini(raw_listings: str, api_key: str, search_query: str, location_slug: str, radius_km: int, max_price: int = 1200) -> str:
+def analyze_with_gemini(raw_listings: str, api_key: str, search_query: str, max_price: int = 1200) -> str:
     """Uses Google Gemini API to appraise UK full Gaming PC deals with DDR5, PCIe 5.0, and PCSpecialist brand new price comparisons."""
-    system_instruction = f"""You are an expert UK PC Hardware Appraisal Agent evaluating DESKTOP PCs (Focus on Upgradeable Foundation) in '{location_slug}', UK ({radius_km} miles radius).
+    system_instruction = f"""You are an expert UK PC Hardware Appraisal Agent evaluating DESKTOP PCs in London (5km radius) and Woking (20km radius), UK.
 STRICT BUDGET CONDITION: ALL LISTINGS EVALUATED MUST BE PRICED AT OR BELOW £{max_price} GBP. DISCARD ANY LISTING OVER £{max_price} GBP.
 STRICT LOCATION REQUIREMENT: All listings evaluated MUST be located in the UK in Pounds (£). Ignore any US listings.
 
@@ -242,22 +236,22 @@ Your goal is to find DESKTOP PCs ON SALE (UNDER £{max_price}) that fulfill KEY 
         raise ImportError("No Google GenAI SDK installed. Please run: pip install google-genai")
 
 
-async def run_search(location: str, query: str, radius: int, api_key: str, max_price: int = 1200):
+async def run_search(query: str, api_key: str, max_price: int = 1200):
     print(f"\n==================================================", flush=True)
-    print(f" SEARCHING GUMTREE UK PCs (MAX £{max_price}): '{query}' | COVERAGE: {location} ({radius} miles)", flush=True)
+    print(f" SEARCHING GUMTREE UK PCs (MAX £{max_price}): '{query}' | London (5km) + Woking (20km)", flush=True)
     print(f"==================================================", flush=True)
 
-    raw_listings = await fetch_marketplace_items(search_query=query, location_slug=location, radius_km=radius, max_price=max_price)
+    raw_listings = await fetch_marketplace_items(search_query=query, max_price=max_price)
 
     new_listings = filter_new_listings(raw_listings)
 
     if not new_listings or len(new_listings.strip()) < 50:
-        print(f"[Notice] No NEW UK listings found under £{max_price} since the last run. Skipping AI analysis.", flush=True)
+        print(f"[Notice] No NEW UK listings found under £{max_price} in London (5km) or Woking (20km). Skipping AI analysis.", flush=True)
         return
 
     print(f"[5/5] Analyzing {len(new_listings.split('--- New Listing ---'))} NEW listings using Google Gemini...", flush=True)
     try:
-        analysis = analyze_with_gemini(new_listings, api_key, search_query=query, location_slug=location, radius_km=radius, max_price=max_price)
+        analysis = analyze_with_gemini(new_listings, api_key, search_query=query, max_price=max_price)
         print(f"\n=== GEMINI GUMTREE UK DEAL APPRAISAL (MAX £{max_price}) ===", flush=True)
         print(analysis, flush=True)
         
@@ -284,8 +278,7 @@ async def main():
     if len(sys.argv) >= 4:
         max_price = int(sys.argv[3])
     
-    # Search Local area (40 miles radius) under max_price
-    await run_search("london", query, 40, api_key, max_price=max_price)
+    await run_search(query, api_key, max_price=max_price)
 
 
 if __name__ == "__main__":
