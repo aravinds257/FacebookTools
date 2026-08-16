@@ -471,13 +471,11 @@ async def run_search(query: str, api_key: str, max_price: int = 1200):
 
         # Only send Pushover notification if genuinely NEW PCs were found (not seen before)
         if new_deal_count > 0:
-            summary_lines = []
-            for d in deals[:new_deal_count]:
-                summary_lines.append(
-                    f"🔥 £{d['price']} | {d['title'][:60]}\n"
-                    f"   ★{d['rating']}/10 — {d.get('verdict', '')[:100]}"
-                )
-            pushover_msg = f"{new_deal_count} NEW PC deal(s) just posted!\n\n" + "\n\n".join(summary_lines)
+            pushover_msg = (
+                f"{new_deal_count} new PC deal(s) found under £{max_price}!\n\n"
+                f"View live on the dashboard:\n"
+                f"https://aravinds257.github.io/FacebookTools/"
+            )
             send_pushover(f"🖥️ {new_deal_count} New PC Deal(s) Found!", pushover_msg)
         else:
             print("[Pushover] No new unique deals — notification skipped.", flush=True)
