@@ -139,6 +139,7 @@ def parse_gemini_to_json(analysis_text: str, max_price: int) -> list:
                 "motherboard": "AMD AM5 (Upgradeable 2027+)" if socket == "am5" else "Intel Z790 (PCIe 5.0)",
                 "location": location,
                 "verdict": verdict,
+                "date_added": datetime.datetime.utcnow().strftime("%Y-%m-%d"),
                 "url": url
             })
             uid += 1
