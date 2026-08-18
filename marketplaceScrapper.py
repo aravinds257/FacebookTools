@@ -60,73 +60,86 @@ def filter_new_listings(raw_listings: str) -> str:
 
 
 def parse_gemini_to_json(analysis_text: str, max_price: int) -> list:
-    """Parses Gemini's markdown table output into a list of deal JSON objects for the web dashboard."""
+    """Parses Gemini's markdown table output into a list of deal JSON objects for the web dashboard.
+
+    Expected Gemini table columns (9 total):
+      0: Source (Gumtree / Facebook)
+      1: Marketplace Price (£)
+      2: Complete Specs & Motherboard
+      3: Location
+      4: Estimated PCSpecialist Brand New Price (£)
+      5: Your Savings (£)
+      6: Value Rating /10
+      7: Gemini Verdict
+      8: Listing Link
+    """
     deals = []
     lines = analysis_text.split('\n')
     header_found = False
     uid = 1
+    skipped = 0
 
     for line in lines:
         line = line.strip()
-        # Skip separators and header rows
         if not line.startswith('|') or '---' in line:
             continue
-        if 'Marketplace Price' in line or 'Price (£)' in line:
+        if 'Marketplace Price' in line or 'Price' in line and 'Rating' in line:
             header_found = True
             continue
         if not header_found:
             continue
 
-        # Split and strip table cells
         cells = [c.strip() for c in line.split('|') if c.strip()]
         if len(cells) < 5:
             continue
 
         try:
-            # Extract marketplace price (first number found)
-            price_raw = re.sub(r'[^0-9]', '', cells[0].split()[0])
+            # cells[0] = Source, cells[1] = Price — extract price from cells[1]
+            price_raw = re.sub(r'[^0-9]', '', cells[1]) if len(cells) > 1 else ""
             if not price_raw:
+                skipped += 1
                 continue
             price = int(price_raw)
             if price > max_price or price < 100:
+                skipped += 1
                 continue
 
-            specs = cells[1] if len(cells) > 1 else "Unknown Specs"
-            location = cells[2] if len(cells) > 2 else "UK Local"
-            
-            # PCSpecialist price
-            new_price_raw = re.sub(r'[^0-9]', '', cells[3].split()[0]) if len(cells) > 3 else ""
+            # cells[2] = Specs, cells[3] = Location
+            specs    = cells[2] if len(cells) > 2 else "Unknown Specs"
+            location = cells[3] if len(cells) > 3 else "UK Local"
+
+            # cells[4] = PCSpecialist new price
+            new_price_raw = re.sub(r'[^0-9]', '', cells[4]) if len(cells) > 4 else ""
             new_price = int(new_price_raw) if new_price_raw else price + 400
-            savings = max(new_price - price, 0)
 
-            # Rating
-            rating_raw = re.findall(r'(\d+\.?\d*)', cells[4] if len(cells) > 4 else "")
+            # cells[5] = Savings (or compute it)
+            savings_raw = re.sub(r'[^0-9]', '', cells[5]) if len(cells) > 5 else ""
+            savings = int(savings_raw) if savings_raw else max(new_price - price, 0)
+
+            # cells[6] = Rating /10
+            rating_raw = re.findall(r'(\d+\.?\d*)', cells[6]) if len(cells) > 6 else []
             rating = float(rating_raw[0]) if rating_raw else 7.0
+            if rating > 10:
+                rating = round(rating / 10, 1)  # guard against e.g. "85" instead of "8.5"
 
-            # URL (last cell)
-            url_match = re.search(r'https?://\S+', cells[-1] if len(cells) > 5 else "")
-            url = url_match.group(0).rstrip(')') if url_match else "#"
-
-            # Gemini Verdict — second-to-last cell (before link)
+            # cells[7] = Gemini Verdict (second to last before link)
             verdict = ""
-            if len(cells) >= 3:
-                # Verdict is the cell just before the last URL cell
-                verdict_cell = cells[-2] if len(cells) > 6 else cells[-1]
-                # Clean up any markdown link syntax
-                verdict = re.sub(r'\[.*?\]\(.*?\)', '', verdict_cell).strip()
-                verdict = verdict[:300]  # Cap length
+            if len(cells) > 7:
+                verdict = re.sub(r'\[.*?\]\(.*?\)', '', cells[7]).strip()[:300]
 
-            # Platform detection
-            platform = "facebook" if "facebook" in url else "gumtree"
+            # cells[-1] = Listing Link
+            url_match = re.search(r'https?://\S+', cells[-1])
+            url = url_match.group(0).rstrip(')>') if url_match else "#"
 
-            # Socket detection from specs
+            # Platform & socket detection
+            platform = "facebook" if "facebook" in url.lower() else "gumtree"
             specs_lower = specs.lower()
             if any(x in specs_lower for x in ['am5', 'x670', 'b650', 'x870', 'b850', 'ryzen 7', 'ryzen 9', 'ryzen 5 7', 'ryzen 5 9']):
                 socket = "am5"
             elif any(x in specs_lower for x in ['z790', 'z690', 'b760', 'i7-13', 'i9-13', 'i7-14', 'i9-14', 'lga1700', 'lga1851']):
                 socket = "intel"
             else:
-                socket = "am5"  # Default assumption for DDR5
+                socket = "am5"
 
             deals.append({
                 "id": str(uid),
@@ -145,10 +158,14 @@ def parse_gemini_to_json(analysis_text: str, max_price: int) -> list:
                 "url": url
             })
             uid += 1
-        except Exception:
+        except Exception as ex:
+            print(f"[Parser] Skipped row (error: {ex}): {line[:80]}", flush=True)
+            skipped += 1
             continue
 
+    print(f"[Parser] Parsed {len(deals)} deal(s) from Gemini table ({skipped} row(s) skipped).", flush=True)
     return deals
+
 
 
 def save_and_push_deals(deals: list):
