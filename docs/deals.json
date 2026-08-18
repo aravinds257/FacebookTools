@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "**CPU**: AMD Ryzen 7 7800X3D<br>**RAM**: DDR5<br>**Motherboard**: AM5 Socket (B650/X670 chipset with PCIe 4.0/5.0 suppor",
+    "price": 800,
+    "newPrice": 1350,
+    "savings": 550,
+    "rating": 9.5,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "**CPU**: AMD Ryzen 7 7800X3D<br>**RAM**: DDR5<br>**Motherboard**: AM5 Socket (B650/X670 chipset with PCIe 4.0/5.0 suppor",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "London",
+    "verdict": "Exceptional AM5 platform foundation built around the market-leading 7800X3D with seamless DDR5/PCIe drop-in future GPU upgradeability, delivering huge \u00a3550 savings over a custom system integrator build.",
+    "date_added": "2026-08-18",
+    "url": "https://www.facebook.com/marketplace/item/1771165553887386/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-08-18 21:10 UTC"
+  },
+  {
+    "id": "1",
     "title": "Gaming PC / Ryzen 5 9600x / RTX 5070 [12GB] / 32GB DDR5 / 1TB Gen4 SSD",
     "price": 1199,
     "newPrice": 1750,
@@ -13,7 +30,8 @@
     "location": "SE London (5 miles)",
     "url": "https://www.gumtree.com/p/desktop-workstation-pcs/gaming-pc-ryzen-5-9600x-rtx-5070-12gb-32gb-ddr5-1tb-gen4-ssd/1515606397",
     "date_added": "2026-08-16",
-    "verdict": "Excellent AM5 platform with Zen 5 CPU and RTX 5070 \u2014 saves over \u00a3550 vs PCSpecialist new build; swap GPU freely in future."
+    "verdict": "Excellent AM5 platform with Zen 5 CPU and RTX 5070 \u2014 saves over \u00a3550 vs PCSpecialist new build; swap GPU freely in future.",
+    "last_updated": "2026-08-18 21:10 UTC"
   },
   {
     "id": "2",
@@ -29,7 +47,8 @@
     "location": "Wembley, London (5 miles)",
     "url": "https://www.gumtree.com/p/desktop-workstation-pcs/gaming-pc-rtx-4070-super-32gb-ddr5-ryzen-5-7600x/1801283057",
     "date_added": "2026-08-16",
-    "verdict": "Strong AM5 foundation with 7600X and 4070 SUPER; platform supported until 2027+ and saves \u00a3401 vs new build from PCSpecialist."
+    "verdict": "Strong AM5 foundation with 7600X and 4070 SUPER; platform supported until 2027+ and saves \u00a3401 vs new build from PCSpecialist.",
+    "last_updated": "2026-08-18 21:10 UTC"
   },
   {
     "id": "3",
@@ -45,7 +64,8 @@
     "location": "Reading / Woking Area (20 miles)",
     "url": "https://www.gumtree.com/p/desktop-workstation-pcs/custom-gaming-pc-ryzen-5-7600-rtx-3080-ti-16gb-ddr5-ram-2tb-storage/1800196501",
     "date_added": "2026-08-16",
-    "verdict": "Great value AM5 DDR5 base with premium 3080 Ti GPU included; ideal upgrade-first strategy saving \u00a3450 vs new equivalent."
+    "verdict": "Great value AM5 DDR5 base with premium 3080 Ti GPU included; ideal upgrade-first strategy saving \u00a3450 vs new equivalent.",
+    "last_updated": "2026-08-18 21:10 UTC"
   },
   {
     "id": "4",
@@ -61,7 +81,8 @@
     "location": "London (5 miles)",
     "url": "https://www.facebook.com/marketplace/item/1089159203564956/",
     "date_added": "2026-08-16",
-    "verdict": "Solid AM5 next-gen GPU pick with RTX 5060 Ti; PCIe 5.0 ready motherboard makes future GPU swaps seamless at \u00a31049."
+    "verdict": "Solid AM5 next-gen GPU pick with RTX 5060 Ti; PCIe 5.0 ready motherboard makes future GPU swaps seamless at \u00a31049.",
+    "last_updated": "2026-08-18 21:10 UTC"
   },
   {
     "id": "5",
@@ -77,7 +98,8 @@
     "location": "London (5 miles)",
     "url": "https://www.facebook.com/marketplace/item/871989322404487/",
     "date_added": "2026-08-16",
-    "verdict": "Top-tier Intel Z790 build with 13700K and 4070 Ti; excellent PCIe 5.0 NVMe support and saves \u00a3850 vs PCSpecialist equivalent."
+    "verdict": "Top-tier Intel Z790 build with 13700K and 4070 Ti; excellent PCIe 5.0 NVMe support and saves \u00a3850 vs PCSpecialist equivalent.",
+    "last_updated": "2026-08-18 21:10 UTC"
   },
   {
     "id": "6",
@@ -93,6 +115,7 @@
     "location": "Woking / Surrey (20 miles)",
     "url": "https://www.gumtree.com/p/desktop-workstation-pcs/fast-gaming-pc-am5-ddr5-ready-to-play/1511022897",
     "date_added": "2026-08-16",
-    "verdict": "Budget-friendly AM5 DDR5 entry point in Woking area; lowest cost path to an upgradeable modern platform saving \u00a3250."
+    "verdict": "Budget-friendly AM5 DDR5 entry point in Woking area; lowest cost path to an upgradeable modern platform saving \u00a3250.",
+    "last_updated": "2026-08-18 21:10 UTC"
   }
 ]
