@@ -538,9 +538,11 @@ Your goal is to find DESKTOP PCs ON SALE (UNDER £{max_price}) that fulfill KEY 
     else:
         raise ImportError("No Google GenAI SDK installed.")
 
-
 def prune_sold_listings():
-    """Checks every deal URL in deals.json and removes any that are sold or no longer available."""
+    """
+    Checks every deal URL in deals.json and removes any that are sold or gone.
+    Works for both Gumtree and Facebook via HTTP — checks for 404 or sold page text.
+    """
     repo_root = os.path.dirname(os.path.abspath(__file__))
     json_path = os.path.join(repo_root, "docs", "deals.json")
 
@@ -555,7 +557,6 @@ def prune_sold_listings():
 
     print(f"[Prune] Checking {len(deals)} deal(s) for sold/removed listings...", flush=True)
 
-    # Text that Gumtree shows when a listing is gone
     SOLD_SIGNALS = [
         "no longer available",
         "this ad has been removed",
@@ -565,13 +566,15 @@ def prune_sold_listings():
         "item not found",
         "has been sold",
         "advert not found",
+        "this listing has ended",
+        "item unavailable",
     ]
 
     active = []
     removed = 0
 
     for deal in deals:
-        url = deal.get('url', '#')
+        url = deal.get('url', '#').split('?')[0]  # Strip tracking params
         if not url or url == '#' or not url.startswith('http'):
             active.append(deal)
             continue
@@ -582,7 +585,6 @@ def prune_sold_listings():
                 headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
             )
             resp = urllib.request.urlopen(req, timeout=6)
-            # Read a small chunk — enough to detect sold signals in the page
             content = resp.read(4000).decode('utf-8', errors='ignore').lower()
 
             if any(signal in content for signal in SOLD_SIGNALS):
@@ -596,10 +598,11 @@ def prune_sold_listings():
                 print(f"[Prune] ❌ Gone (404): {deal.get('title', '')[:60]}", flush=True)
                 removed += 1
             else:
-                # 403 / 429 / 5xx — can't confirm, keep the listing
+                # 403/429/5xx — can't confirm status, keep the listing
+                print(f"[Prune] ⚠️  HTTP {e.code} for: {deal.get('title', '')[:50]} — keeping", flush=True)
                 active.append(deal)
         except Exception:
-            # Timeout or network error — keep the listing to be safe
+            # Timeout or network error — keep to be safe
             active.append(deal)
 
     if removed > 0:
@@ -608,15 +611,19 @@ def prune_sold_listings():
         print(f"[Prune] Removed {removed} sold listing(s). {len(active)} active deal(s) remain.", flush=True)
         try:
             subprocess.run(["git", "-C", repo_root, "add", "docs/deals.json"], check=True, capture_output=True)
-            subprocess.run(["git", "-C", repo_root, "commit", "-m",
-                            f"Remove {removed} sold listing(s) ({datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')})"],
-                           check=True, capture_output=True)
+            result = subprocess.run(
+                ["git", "-C", repo_root, "commit", "-m",
+                 f"Remove {removed} sold listing(s) ({datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')})"],
+                check=True, capture_output=True
+            )
             subprocess.run(["git", "-C", repo_root, "push"], check=True, capture_output=True)
-            print(f"[Prune] Pushed updated deals.json to GitHub.", flush=True)
-        except Exception:
-            pass
+            print(f"[Prune] ✅ Pushed updated deals.json to GitHub.", flush=True)
+        except subprocess.CalledProcessError as e:
+            err = e.stderr.decode('utf-8', errors='ignore').strip() if e.stderr else str(e)
+            print(f"[Prune] ⚠️  Git push failed: {err}", flush=True)
     else:
         print(f"[Prune] ✅ All {len(active)} deal(s) still active.", flush=True)
+
 
 
 async def run_search(query: str, api_key: str, max_price: int = 1200):
