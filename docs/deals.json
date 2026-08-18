@@ -85,23 +85,6 @@
     "last_updated": "2026-08-18 21:10 UTC"
   },
   {
-    "id": "5",
-    "title": "Gaming Desktop/PC 4070ti - i7 13700k - 32 GB DDR5 - 2TB SSD",
-    "price": 1200,
-    "newPrice": 2050,
-    "savings": 850,
-    "rating": 9.8,
-    "platform": "facebook",
-    "socket": "intel",
-    "specs": "i7-13700K \u2022 RTX 4070 Ti 12GB \u2022 32GB DDR5 \u2022 2TB NVMe",
-    "motherboard": "Intel Z790 (PCIe 5.0 NVMe/GPU)",
-    "location": "London (5 miles)",
-    "url": "https://www.facebook.com/marketplace/item/871989322404487/",
-    "date_added": "2026-08-16",
-    "verdict": "Top-tier Intel Z790 build with 13700K and 4070 Ti; excellent PCIe 5.0 NVMe support and saves \u00a3850 vs PCSpecialist equivalent.",
-    "last_updated": "2026-08-18 21:10 UTC"
-  },
-  {
     "id": "6",
     "title": "Fast Gaming PC \u2013 AM5 / DDR5 \u2013 Ready to Play Custom Build",
     "price": 850,
