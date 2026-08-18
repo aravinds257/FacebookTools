@@ -6,7 +6,9 @@ import asyncio
 import datetime
 import subprocess
 import urllib.parse
-import urllib.request
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from playwright.async_api import async_playwright
 
 MAX_PRICE_GBP = 1200
@@ -201,30 +203,103 @@ def save_and_push_deals(deals: list):
     return len(new_deals)  # Return count so caller knows if truly new deals were found
 
 
-def send_pushover(title: str, message: str):
-    """Sends a push notification to your phone via Pushover API."""
-    token = os.environ.get("PUSHOVER_TOKEN")
-    user = os.environ.get("PUSHOVER_USER")
-    if not token or not user:
+NOTIFICATION_EMAIL = "aravinds.257@gmail.com"
+
+
+def send_email_notification(new_deal_count: int, deals: list, max_price: int):
+    """Sends a rich HTML email to aravinds.257@gmail.com listing new PC deals found."""
+    smtp_user = os.environ.get("SMTP_EMAIL")
+    smtp_pass = os.environ.get("SMTP_PASSWORD")
+    smtp_host = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+    smtp_port = int(os.environ.get("SMTP_PORT", "587"))
+
+    subject = f"🖥️ PC Radar: {new_deal_count} New Deal{'s' if new_deal_count > 1 else ''} Found Under £{max_price:,}"
+
+    # ── Plain text fallback
+    text_lines = [
+        f"PC Radar found {new_deal_count} new PC deal(s) under £{max_price:,}!",
+        f"View live dashboard: https://aravinds257.github.io/FacebookTools/",
+        "=" * 60, ""
+    ]
+    for i, d in enumerate(deals[:new_deal_count], 1):
+        text_lines.append(f"{i}. {d.get('title', 'PC Deal')}")
+        text_lines.append(f"   Price: £{d.get('price', 0):,} | Rating: {d.get('rating', 'N/A')}/10")
+        if d.get('verdict'):
+            text_lines.append(f"   Gemini: {d['verdict']}")
+        text_lines.append(f"   Link: {d.get('url', '#')}")
+        text_lines.append("-" * 40)
+    text_body = "\n".join(text_lines)
+
+    # ── Rich HTML email
+    cards_html = []
+    for d in deals[:new_deal_count]:
+        savings = d.get('savings', 0)
+        verdict_tag = ""
+        if d.get('verdict'):
+            verdict_tag = f"""
+            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:13px;color:#166534;line-height:1.4;">
+                <strong style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;">🤖 Gemini Appraisal:</strong><br/>{d['verdict']}
+            </div>"""
+        saving_str = f'<span style="color:#16a34a;font-size:14px;font-weight:700;margin-left:8px;">💰 £{savings:,} under new price</span>' if savings > 0 else ""
+        new_price_str = f'<div style="font-size:12px;color:#94a3b8;margin-top:4px;">vs PCSpecialist: <span style="text-decoration:line-through;">£{d.get("newPrice", 0):,}</span></div>' if d.get('newPrice') else ""
+        cards_html.append(f"""
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 2px 4px rgba(0,0,0,0.05);">
+            <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+                <span style="background:#dbeafe;color:#1d4ed8;font-weight:700;font-size:12px;padding:3px 10px;border-radius:6px;">{(d.get('socket') or 'DDR5').upper()}</span>
+                <span style="background:#fef3c7;color:#b45309;font-weight:800;font-size:12px;padding:3px 10px;border-radius:6px;">★ {d.get('rating', 7.5)} / 10</span>
+            </div>
+            <h3 style="margin:8px 0 4px;font-size:16px;color:#0f172a;font-weight:700;">{d.get('title', 'PC Deal')[:100]}</h3>
+            <p style="margin:0 0 12px;font-size:13px;color:#64748b;">📍 {d.get('location', 'UK Local')}</p>
+            <div style="background:#f8fafc;border-radius:8px;padding:12px;margin-bottom:12px;">
+                <div style="font-size:22px;font-weight:800;color:#0f172a;">£{d.get('price', 0):,} {saving_str}</div>
+                {new_price_str}
+            </div>
+            {verdict_tag}
+            <a href="{d.get('url', '#')}" target="_blank"
+               style="display:block;background:#1d4ed8;color:#fff;font-weight:700;font-size:14px;text-align:center;padding:11px;border-radius:8px;text-decoration:none;">
+                View Listing &rarr;
+            </a>
+        </div>""")
+
+    html_body = f"""<!DOCTYPE html><html><head><meta charset="utf-8"/></head>
+    <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;margin:0;padding:24px 12px;color:#334155;">
+        <div style="max-width:600px;margin:0 auto;">
+            <div style="background:linear-gradient(135deg,#1e3a8a,#1d4ed8);border-radius:12px;padding:24px;color:#fff;text-align:center;margin-bottom:24px;">
+                <h1 style="margin:0 0 6px;font-size:22px;font-weight:800;">🖥️ PC Radar Deal Alert</h1>
+                <p style="margin:0;font-size:14px;opacity:0.9;">{new_deal_count} new PC deal{'s' if new_deal_count > 1 else ''} found under £{max_price:,}</p>
+            </div>
+            {''.join(cards_html)}
+            <div style="text-align:center;margin-top:24px;font-size:13px;color:#64748b;">
+                <a href="https://aravinds257.github.io/FacebookTools/" style="color:#1d4ed8;font-weight:700;">View Full Dashboard &rarr;</a>
+                <p style="font-size:11px;color:#94a3b8;margin-top:8px;">Powered by Playwright · Google Gemini AI</p>
+            </div>
+        </div>
+    </body></html>"""
+
+    # If SMTP not configured, print links to terminal instead
+    if not smtp_user or not smtp_pass:
+        print(f"[Email] SMTP_EMAIL / SMTP_PASSWORD not set — printing deals to terminal instead.", flush=True)
+        print(f"[Email] To enable emails: add SMTP_EMAIL and SMTP_PASSWORD to your environment.", flush=True)
+        for d in deals[:new_deal_count]:
+            print(f"  💻 £{d.get('price', 0):,} | {d.get('title', '')[:60]} → {d.get('url', '#')}", flush=True)
         return
-    
-    # Pushover has a 1024 character limit, so we truncate if necessary
-    truncated_msg = message[:1024] if len(message) > 1024 else message
-    
-    url = "https://api.pushover.net/1/messages.json"
-    data = urllib.parse.urlencode({
-        "token": token,
-        "user": user,
-        "title": title,
-        "message": truncated_msg
-    }).encode("utf-8")
-    
-    req = urllib.request.Request(url, data=data)
+
     try:
-        urllib.request.urlopen(req)
-        print("[Pushover] Deal notification sent to your phone!", flush=True)
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = subject
+        msg["From"]    = f"PC Radar <{smtp_user}>"
+        msg["To"]      = NOTIFICATION_EMAIL
+        msg.attach(MIMEText(text_body, "plain", "utf-8"))
+        msg.attach(MIMEText(html_body, "html",  "utf-8"))
+
+        with smtplib.SMTP(smtp_host, smtp_port, timeout=20) as server:
+            server.starttls()
+            server.login(smtp_user, smtp_pass)
+            server.sendmail(smtp_user, [NOTIFICATION_EMAIL], msg.as_string())
+
+        print(f"[Email] Notification sent to {NOTIFICATION_EMAIL} with {new_deal_count} deal(s)! 📧", flush=True)
     except Exception as e:
-        print(f"[Pushover] Failed to send notification: {e}", flush=True)
+        print(f"[Email] Failed to send: {e}", flush=True)
 
 
 async def fetch_gumtree_items(page, search_query: str, location_slug: str, radius_km: int, max_price: int) -> str:
@@ -470,16 +545,11 @@ async def run_search(query: str, api_key: str, max_price: int = 1200):
         if deals:
             new_deal_count = save_and_push_deals(deals) or 0
 
-        # Only send Pushover notification if genuinely NEW PCs were found (not seen before)
+        # Only send email if genuinely NEW PCs were found (not seen before)
         if new_deal_count > 0:
-            pushover_msg = (
-                f"{new_deal_count} new PC deal(s) found under £{max_price}!\n\n"
-                f"View live on the dashboard:\n"
-                f"https://aravinds257.github.io/FacebookTools/"
-            )
-            send_pushover(f"🖥️ {new_deal_count} New PC Deal(s) Found!", pushover_msg)
+            send_email_notification(new_deal_count, deals, max_price)
         else:
-            print("[Pushover] No new unique deals — notification skipped.", flush=True)
+            print("[Email] No new unique deals — notification skipped.", flush=True)
 
     except Exception as e:
         print(f"[Error] Gemini API evaluation failed: {e}", flush=True)
