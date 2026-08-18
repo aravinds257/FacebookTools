@@ -491,7 +491,7 @@ async def main():
         print("CRITICAL ERROR: 'GEMINI_API_KEY' environment variable is missing.", flush=True)
         return
 
-    max_price = int(os.environ.get("MAX_PRICE", "1200"))
+    max_price = int(os.environ.get("MAX_PRICE", "1500"))
     query = os.environ.get("SEARCH_QUERY", "PC DDR5")
     
     if len(sys.argv) >= 4:
