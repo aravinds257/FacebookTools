@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "Intel Core i7-12700KF, NVIDIA RTX 4070 Ti 16GB, DDR5 RAM, 1TB SSD. LGA1700 motherboard foundation with solid high-end GP",
+    "price": 999,
+    "newPrice": 1399,
+    "savings": 400,
+    "rating": 9.0,
+    "platform": "facebook",
+    "socket": "intel",
+    "specs": "Intel Core i7-12700KF, NVIDIA RTX 4070 Ti 16GB, DDR5 RAM, 1TB SSD. LGA1700 motherboard foundation with solid high-end GP",
+    "motherboard": "Intel Z790 (PCIe 5.0)",
+    "location": "London, UK",
+    "verdict": "Exceptional value featuring an LGA1700 socket, robust DDR5 memory, a powerful RTX 4070 Ti GPU, and solid \u00a3400 savings.",
+    "date_added": "2026-08-18",
+    "url": "https://www.facebook.com/marketplace/item/2194181024648356/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-08-18 23:00 UTC"
+  },
+  {
+    "id": "1",
     "title": "**CPU**: AMD Ryzen 7 7800X3D<br>**RAM**: DDR5<br>**Motherboard**: AM5 Socket (B650/X670 chipset with PCIe 4.0/5.0 suppor",
     "price": 800,
     "newPrice": 1350,
