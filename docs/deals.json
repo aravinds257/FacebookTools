@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "**CyberPowerPC Sylph Desktop**: Modern DDR5 Platform (AM5 / LGA1700 base), 16GB DDR5 RAM, 500GB NVMe SSD, standard airfl",
+    "price": 550,
+    "newPrice": 770,
+    "savings": 220,
+    "rating": 8.5,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "**CyberPowerPC Sylph Desktop**: Modern DDR5 Platform (AM5 / LGA1700 base), 16GB DDR5 RAM, 500GB NVMe SSD, standard airfl",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Luton (Greater London Area)",
+    "verdict": "Excellent modern DDR5 platform providing a seamless CPU and GPU upgrade path at a solid \u00a3220 discount over a new custom build.",
+    "date_added": "2026-08-19",
+    "url": "https://www.facebook.com/marketplace/item/2151589959071529/",
+    "last_updated": "2026-08-19 23:00 UTC"
+  },
+  {
+    "id": "1",
     "title": "**CPU:** AMD Ryzen 5 7600X<br>**GPU:** NVIDIA RTX 3090 Founders Edition (24GB VRAM)<br>**RAM:** 32GB DDR5<br>**Storage:*",
     "price": 1295,
     "newPrice": 1850,
