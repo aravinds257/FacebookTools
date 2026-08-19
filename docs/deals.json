@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 7 7800X3D, NVIDIA RTX 5070 Ti 16GB, 32GB DDR5 RAM, AMD B850 WiFi Motherboard",
+    "price": 1495,
+    "newPrice": 1850,
+    "savings": 355,
+    "rating": 9.5,
+    "platform": "gumtree",
+    "socket": "am5",
+    "specs": "AMD Ryzen 7 7800X3D, NVIDIA RTX 5070 Ti 16GB, 32GB DDR5 RAM, AMD B850 WiFi Motherboard",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Victoria, London",
+    "verdict": "Exceptional value featuring the AM5 socket, an elite B850 upgrade path, a top-tier 7800X3D CPU paired with an advanced RTX 5070 Ti, and a solid \u00a3355 saving.",
+    "date_added": "2026-08-19",
+    "url": "https://www.gumtree.com/p/desktop-workstation-pcs/high-end-gaming-pc-rtx-5070-ti-16gb-ryzen-7-7800x3d-32gb-ddr5-b850-wifi/1801731573",
+    "last_updated": "2026-08-19 15:41 UTC"
+  },
+  {
+    "id": "1",
     "title": "Intel Core i7-12700KF, NVIDIA RTX 4070 Ti 16GB, DDR5 RAM, 1TB SSD. LGA1700 motherboard foundation with solid high-end GP",
     "price": 999,
     "newPrice": 1399,
