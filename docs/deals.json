@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 7 9800X3D, RTX 3080 Ti Founders Edition, 32GB DDR5 RAM, 4TB NVMe SSD, 850W PSU, standard DIY motherboard with ",
+    "price": 1499,
+    "newPrice": 1899,
+    "savings": 400,
+    "rating": 9.5,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "AMD Ryzen 7 9800X3D, RTX 3080 Ti Founders Edition, 32GB DDR5 RAM, 4TB NVMe SSD, 850W PSU, standard DIY motherboard with ",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "London, UK",
+    "verdict": "Exceptional value featuring the elite AM5 socket with the ultimate 9800X3D gaming CPU, a top-tier upgrade path, high-end GPU, and massive \u00a3400 savings.",
+    "date_added": "2026-08-21",
+    "url": "https://www.facebook.com/marketplace/item/4679509152282429/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-08-21 19:07 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 9 9900X, 32GB DDR5 RAM, AMD Radeon RX 7700 XT 12GB VRAM, 1TB NVMe SSD. Motherboard: AM5 chipset (supporting fu",
     "price": 1100,
     "newPrice": 1550,
@@ -15,23 +32,6 @@
     "date_added": "2026-08-21",
     "url": "https://www.gumtree.com/p/desktop-workstation-pcs/gaming-pc-ryzen-9900x-32gb-ddr5-ram-7700xt-12gb-vram-1tb/1801429460",
     "last_updated": "2026-08-21 17:19 UTC"
-  },
-  {
-    "id": "1",
-    "title": "**CPU:** AMD Ryzen 5 5600G (6C/12T)<br>**GPU:** NVIDIA GTX 1660 Super 6GB<br>**RAM:** 16GB DDR4 (Non-DDR5)<br>**Storage:",
-    "price": 350,
-    "newPrice": 530241080,
-    "savings": 180,
-    "rating": 3.5,
-    "platform": "facebook",
-    "socket": "am5",
-    "specs": "**CPU:** AMD Ryzen 5 5600G (6C/12T)<br>**GPU:** NVIDIA GTX 1660 Super 6GB<br>**RAM:** 16GB DDR4 (Non-DDR5)<br>**Storage:",
-    "motherboard": "AMD AM5 (Upgradeable 2027+)",
-    "location": "London, UK",
-    "verdict": "Fails the mandatory DDR5/PCIe 5.0 requirement due to a dead-end AM4 socket and proprietary HP motherboard/PSU, meaning future CPU and GPU upgrade paths are severely constrained despite \u00a3180 in savings.",
-    "date_added": "2026-08-21",
-    "url": "https://www.facebook.com/marketplace/item/1347155723802019/",
-    "last_updated": "2026-08-21 06:35 UTC"
   },
   {
     "id": "1",
