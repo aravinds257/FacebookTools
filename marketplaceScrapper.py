@@ -143,6 +143,20 @@ def parse_gemini_to_json(analysis_text: str, max_price: int) -> list:
             else:
                 socket = "am5"
 
+            # ── Safety net: hard-reject non-DDR5/AM4 even if Gemini slips them through
+            if rating < 6.5:
+                print(f"[Parser] ⛔ Skipped low-rated deal ({rating}/10): {specs[:60]}", flush=True)
+                skipped += 1
+                continue
+            if 'ddr4' in specs_lower and 'ddr5' not in specs_lower:
+                print(f"[Parser] ⛔ Skipped DDR4 listing: {specs[:60]}", flush=True)
+                skipped += 1
+                continue
+            if 'am4' in specs_lower and 'am5' not in specs_lower:
+                print(f"[Parser] ⛔ Skipped AM4 listing: {specs[:60]}", flush=True)
+                skipped += 1
+                continue
+
             deals.append({
                 "id": str(uid),
                 "title": specs[:120],
@@ -491,16 +505,27 @@ def analyze_with_gemini(raw_listings: str, api_key: str, search_query: str, max_
     system_instruction = f"""You are an expert UK PC Hardware Appraisal Agent evaluating DESKTOP PCs in London (5 miles radius) and Woking (20 miles radius), UK.
 STRICT BUDGET CONDITION: ALL LISTINGS EVALUATED MUST BE PRICED AT OR BELOW £{max_price} GBP. DISCARD ANY LISTING OVER £{max_price} GBP.
 
-Your goal is to find DESKTOP PCs ON SALE (UNDER £{max_price}) that fulfill KEY FUTURE-PROOF REQUIREMENTS:
-1. **DDR5 RAM (MANDATORY)**
-2. **PCIe 5.0 Support / Latest Motherboards (HIGH PRIORITY)**: Look for AM5 (B650, X670, B850, X870) or Intel LGA1700/1851 (Z690, Z790, B760). The focus is on finding a system with an excellent motherboard foundation that allows for future RAM and GPU upgrades.
-3. **GPU Requirement is Relaxed**: The user DOES NOT need a high-end gaming GPU right now. Basic GPUs or integrated graphics are perfectly fine as long as the Motherboard + CPU + DDR5 foundation is modern and highly upgradeable.
+Your goal is to find DESKTOP PCs that fulfill KEY FUTURE-PROOF REQUIREMENTS.
 
-4. **PCSPECIALIST PRICE COMPARISON (CRITICAL)**:
-   For every deal found, calculate the estimated brand-new equivalent build price if configured on **PCSpecialist (or Amazon UK)**, and calculate the **Savings (£)**.
+**HARD DISQUALIFIERS — Do NOT include in the output table at all:**
+- DDR4 RAM (only DDR5 is acceptable)
+- AM4 socket (only AM5, LGA1700, or LGA1851 are acceptable)
+- Proprietary OEM motherboards (HP, Dell, Lenovo locked boards that cannot be upgraded)
+- Any PC with a Value Rating below 6.5/10
 
-5. Output a structured Markdown table of the TOP DEALS UNDER £{max_price}. You MUST include ALL of these columns in this exact order:
-   | Source | Marketplace Price (£) | Complete Specs & Motherboard (Focus on Upgradeability) | Location | Estimated PCSpecialist Brand New Price (£) | Your Savings (£) | Value Rating /10 | Gemini Verdict (1 sentence: WHY this score — mention socket, upgrade path, GPU value, and savings) | Listing Link |
+**MANDATORY REQUIREMENTS (all must be met to appear in the table):**
+1. **DDR5 RAM** — hard requirement, no exceptions
+2. **Modern Socket** — AM5 (B650/X670/B850/X870) OR Intel LGA1700/LGA1851 (Z690/Z790/B760)
+3. **PCIe 4.0 or 5.0 support** on the motherboard
+4. **GPU Requirement is RELAXED** — basic or integrated graphics are fine; the CPU+DDR5+motherboard foundation is what matters
+5. **Price at or under £{max_price}**
+
+**PCSPECIALIST PRICE COMPARISON (CRITICAL):**
+For every qualifying deal, calculate the estimated brand-new equivalent build price on PCSpecialist (or Amazon UK) and compute the Savings (£).
+
+Output a structured Markdown table of ONLY THE QUALIFYING DEALS UNDER £{max_price}. If a PC fails any hard disqualifier above, do NOT add it to the table — skip it entirely.
+Include ALL of these columns in this exact order:
+| Source | Marketplace Price (£) | Complete Specs & Motherboard (Focus on Upgradeability) | Location | Estimated PCSpecialist Brand New Price (£) | Your Savings (£) | Value Rating /10 | Gemini Verdict (1 sentence: WHY this score — mention socket, upgrade path, GPU value, and savings) | Listing Link |
 """
 
     prompt = f"{system_instruction}\n\nHere is the combined raw text dump from Gumtree and Facebook Marketplace listings in London (5km) and Woking (20km):\n\n{raw_listings}\n\nPlease evaluate these listings and provide your top full UK PC deal recommendations under £{max_price}."
