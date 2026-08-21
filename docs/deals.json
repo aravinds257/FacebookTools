@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "**CPU:** AMD Ryzen 5 5600G (6C/12T)<br>**GPU:** NVIDIA GTX 1660 Super 6GB<br>**RAM:** 16GB DDR4 (Non-DDR5)<br>**Storage:",
+    "price": 350,
+    "newPrice": 530241080,
+    "savings": 180,
+    "rating": 3.5,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "**CPU:** AMD Ryzen 5 5600G (6C/12T)<br>**GPU:** NVIDIA GTX 1660 Super 6GB<br>**RAM:** 16GB DDR4 (Non-DDR5)<br>**Storage:",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "London, UK",
+    "verdict": "Fails the mandatory DDR5/PCIe 5.0 requirement due to a dead-end AM4 socket and proprietary HP motherboard/PSU, meaning future CPU and GPU upgrade paths are severely constrained despite \u00a3180 in savings.",
+    "date_added": "2026-08-21",
+    "url": "https://www.facebook.com/marketplace/item/1347155723802019/",
+    "last_updated": "2026-08-21 06:35 UTC"
+  },
+  {
+    "id": "1",
     "title": "**CPU:** AMD Ryzen 5 9600X (Zen 5)<br>**RAM:** 16GB DDR5<br>**Motherboard:** AM5 Platform (PCIe 5.0 / B650/X670/B850 rea",
     "price": 850,
     "newPrice": 1220,
