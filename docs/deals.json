@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 9 9900X, 32GB DDR5 RAM, AMD Radeon RX 7700 XT 12GB VRAM, 1TB NVMe SSD. Motherboard: AM5 chipset (supporting fu",
+    "price": 1100,
+    "newPrice": 1550,
+    "savings": 450,
+    "rating": 9.5,
+    "platform": "gumtree",
+    "socket": "am5",
+    "specs": "AMD Ryzen 9 9900X, 32GB DDR5 RAM, AMD Radeon RX 7700 XT 12GB VRAM, 1TB NVMe SSD. Motherboard: AM5 chipset (supporting fu",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Ilford, London",
+    "verdict": "Exceptional value featuring the latest AM5 socket and a powerful 9900X CPU, offering massive future upgrade headroom and a capable GPU with \u00a3450 in savings.",
+    "date_added": "2026-08-21",
+    "url": "https://www.gumtree.com/p/desktop-workstation-pcs/gaming-pc-ryzen-9900x-32gb-ddr5-ram-7700xt-12gb-vram-1tb/1801429460",
+    "last_updated": "2026-08-21 17:19 UTC"
+  },
+  {
+    "id": "1",
     "title": "**CPU:** AMD Ryzen 5 5600G (6C/12T)<br>**GPU:** NVIDIA GTX 1660 Super 6GB<br>**RAM:** 16GB DDR4 (Non-DDR5)<br>**Storage:",
     "price": 350,
     "newPrice": 530241080,
