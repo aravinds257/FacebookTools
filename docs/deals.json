@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 5 7600, RTX 3080 Ti 12GB, DDR5 RAM, 1TB NVMe SSD, Standard ATX Motherboard (PCIe 4.0, AM5 socket)",
+    "price": 995,
+    "newPrice": 1350,
+    "savings": 355,
+    "rating": 8.5,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "AMD Ryzen 5 7600, RTX 3080 Ti 12GB, DDR5 RAM, 1TB NVMe SSD, Standard ATX Motherboard (PCIe 4.0, AM5 socket)",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "London, United Kingdom",
+    "verdict": "Exceptional value featuring the future-proof AM5 socket with an easy CPU/GPU upgrade path, a high-end RTX 3080 Ti, and solid savings of \u00a3355.",
+    "date_added": "2026-08-22",
+    "url": "https://www.facebook.com/marketplace/item/775427795221488/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-08-22 22:38 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 7 9800X3D, RTX 3080 Ti Founders Edition, 32GB DDR5 RAM, 4TB NVMe SSD, 850W PSU, standard DIY motherboard with ",
     "price": 1499,
     "newPrice": 1899,
