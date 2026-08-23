@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "Thermaltake Tower 200, Asus ROG Strix B760i Gaming WiFi (LGA1700, DDR5, PCIe 4.0), Intel Core i5-14400, 32GB DDR5 RAM, A",
+    "price": 1100,
+    "newPrice": 1450,
+    "savings": 350,
+    "rating": 8.5,
+    "platform": "facebook",
+    "socket": "intel",
+    "specs": "Thermaltake Tower 200, Asus ROG Strix B760i Gaming WiFi (LGA1700, DDR5, PCIe 4.0), Intel Core i5-14400, 32GB DDR5 RAM, A",
+    "motherboard": "Intel Z790 (PCIe 5.0)",
+    "location": "Harold Wood, Havering",
+    "verdict": "Excellent value scoring an 8.5/10 due to the high-end Strix B760i LGA1700 DDR5 motherboard, strong 16GB VRAM GPU, and \u00a3350 savings over retail.",
+    "date_added": "2026-08-23",
+    "url": "https://www.facebook.com/marketplace/item/2437800583374584/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-08-23 08:49 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 5 7600, RTX 3080 Ti 12GB, DDR5 RAM, 1TB NVMe SSD, Standard ATX Motherboard (PCIe 4.0, AM5 socket)",
     "price": 995,
     "newPrice": 1350,
