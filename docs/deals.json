@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "**CPU:** AMD Ryzen 5 8400F (6C/12T)<br>**Socket:** AM5 (PCIe 4.0/5.0 upgradeable)<br>**RAM:** DDR5<br>**GPU:** 12GB Mode",
+    "price": 1000,
+    "newPrice": 1380,
+    "savings": 380,
+    "rating": 8.2,
+    "platform": "gumtree",
+    "socket": "am5",
+    "specs": "**CPU:** AMD Ryzen 5 8400F (6C/12T)<br>**Socket:** AM5 (PCIe 4.0/5.0 upgradeable)<br>**RAM:** DDR5<br>**GPU:** 12GB Mode",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Bognor Regis, West Sussex",
+    "verdict": "High-value AM5 foundation featuring DDR5 support and a massive upgrade path to Ryzen 7000/9000X3D chips, paired with a solid 12GB GPU offering \u00a3380 in direct savings.",
+    "date_added": "2026-08-23",
+    "url": "https://www.gumtree.com/p/desktop-workstation-pcs/gaming-pc-infinity-amd-ryzen-5-8400f-rtx-5070-12gb-ddr5-ai-desktop-pc-for-gaming/1801875441",
+    "last_updated": "2026-08-23 19:00 UTC"
+  },
+  {
+    "id": "1",
     "title": "Thermaltake Tower 200, Asus ROG Strix B760i Gaming WiFi (LGA1700, DDR5, PCIe 4.0), Intel Core i5-14400, 32GB DDR5 RAM, A",
     "price": 1100,
     "newPrice": 1450,
