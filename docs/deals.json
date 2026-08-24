@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "**CPU:** AMD Ryzen 5 9600X (Zen 5)<br>**GPU:** Nvidia GeForce RTX 5070<br>**RAM:** 16GB DDR5<br>**Storage:** 1TB M.2 NVM",
+    "price": 1200,
+    "newPrice": 1450,
+    "savings": 250,
+    "rating": 9.0,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "**CPU:** AMD Ryzen 5 9600X (Zen 5)<br>**GPU:** Nvidia GeForce RTX 5070<br>**RAM:** 16GB DDR5<br>**Storage:** 1TB M.2 NVM",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Ruislip / Slough",
+    "verdict": "Exceptional modern build featuring the latest AM5 socket with top-tier Zen 5 upgradeability, immense next-gen RTX 5070 graphics value, and a solid \u00a3250 saving compared to retail prebuilts.",
+    "date_added": "2026-08-24",
+    "url": "https://www.facebook.com/marketplace/item/1926228031397200/",
+    "last_updated": "2026-08-24 23:00 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 5 7600X, AMD Radeon RX 6600, 32GB DDR5 RAM, 1TB NVMe SSD, AM5 Motherboard with PCIe 4.0 support",
     "price": 680,
     "newPrice": 950,
