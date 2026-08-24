@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 5 7600X, AMD Radeon RX 6600, 32GB DDR5 RAM, 1TB NVMe SSD, AM5 Motherboard with PCIe 4.0 support",
+    "price": 680,
+    "newPrice": 950,
+    "savings": 270,
+    "rating": 8.5,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "AMD Ryzen 5 7600X, AMD Radeon RX 6600, 32GB DDR5 RAM, 1TB NVMe SSD, AM5 Motherboard with PCIe 4.0 support",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Bromley, UK",
+    "verdict": "Excellent value on the AM5 socket with solid DDR5 memory and a great upgrade path, offering \u00a3270 in savings.",
+    "date_added": "2026-08-24",
+    "url": "https://www.facebook.com/marketplace/item/2028613361105889/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-08-24 21:19 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 7 7700, RTX 4070 Super, 16GB DDR5, Standard ATX B650 Motherboard, PCIe 4.0 Support",
     "price": 850,
     "newPrice": 1250,
