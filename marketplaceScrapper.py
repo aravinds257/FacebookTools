@@ -544,7 +544,11 @@ Include ALL of these columns in this exact order:
 
         for m in active_models:
             try:
-                response = client.models.generate_content(model=m, contents=prompt)
+                response = client.models.generate_content(
+                    model=m,
+                    contents=prompt,
+                    config={"automatic_function_calling": {"disable": True}}
+                )
                 print(f"[AI Agent] Successfully analyzed using model: '{m}'", flush=True)
                 return response.text
             except Exception: continue
