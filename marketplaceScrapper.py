@@ -619,8 +619,8 @@ def prune_sold_listings():
                 active.append(deal)
 
         except urllib.error.HTTPError as e:
-            if e.code == 404:
-                print(f"[Prune] ❌ Gone (404): {deal.get('title', '')[:60]}", flush=True)
+            if e.code in (404, 410):
+                print(f"[Prune] ❌ Gone (HTTP {e.code}): {deal.get('title', '')[:60]}", flush=True)
                 removed += 1
             else:
                 # 403/429/5xx — can't confirm status, keep the listing
