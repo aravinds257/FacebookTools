@@ -502,6 +502,38 @@
             color: var(--text-dim);
             font-size: 13px;
         }
+
+        /* ── Tab Navigation ── */
+        .tab-bar { background: var(--bg-surface); border-bottom: 1px solid var(--border-subtle); padding: 0 20px; }
+        .tab-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 4px; }
+        .tab-btn { background: none; border: none; color: var(--text-muted); font-family: inherit; font-size: 14px; font-weight: 600; padding: 14px 18px; cursor: pointer; border-bottom: 2px solid transparent; transition: var(--transition); }
+        .tab-btn:hover { color: var(--text-main); }
+        .tab-btn.active { color: var(--accent-blue); border-bottom-color: var(--accent-blue); }
+        .tab-count { background: var(--bg-surface-elevated); border-radius: 999px; padding: 2px 8px; font-size: 11px; margin-left: 6px; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+        /* ── Price Drop Cards ── */
+        .drop-badge { display:inline-block; background:rgba(239,68,68,0.15); color:#f87171; border:1px solid rgba(239,68,68,0.3); border-radius:var(--radius-sm); padding:4px 10px; font-size:12px; font-weight:800; margin-bottom:12px; }
+        .drop-price-row { display:flex; align-items:center; gap:12px; margin:12px 0; flex-wrap:wrap; }
+        .old-price { font-size:18px; text-decoration:line-through; color:var(--text-dim); font-family:'JetBrains Mono',monospace; }
+        .price-arrow { color:var(--text-dim); font-size:20px; }
+        .new-price { font-size:26px; font-weight:800; color:#34d399; font-family:'JetBrains Mono',monospace; }
+        .drop-saving { font-size:13px; color:#34d399; font-weight:700; margin-bottom:8px; }
+        .drop-date { font-size:12px; color:var(--text-dim); margin-bottom:14px; }
+        .drop-card { padding:22px; display:flex; flex-direction:column; }
+        /* ── Generic card/grid shared by both panels ── */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 24px; }
+        .card { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); transition: var(--transition); }
+        .card:hover { transform: translateY(-3px); border-color: rgba(59,130,246,0.4); box-shadow: 0 16px 30px -10px rgba(0,0,0,0.6); }
+        .card-title { font-size:16px; font-weight:700; color:#fff; margin-bottom:6px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+        /* ── Empty state for drops panel ── */
+        .empty { grid-column: 1 / -1; text-align:center; padding:60px 20px; background:var(--bg-surface); border:1px dashed var(--border-subtle); border-radius:var(--radius-lg); color:var(--text-muted); }
+        .empty h3 { font-size:18px; color:var(--text-main); margin-bottom:6px; }
+        /* ── Drop panel search wrap ── */
+        .search-wrap { position:relative; flex:1; min-width:260px; }
+        .search-wrap .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text-dim); pointer-events:none; }
+        .search-wrap input { width:100%; background:var(--bg-primary); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:10px 16px 10px 40px; font-size:14px; color:var(--text-main); outline:none; transition:var(--transition); }
+        .search-wrap input:focus { border-color:var(--accent-blue); box-shadow:0 0 0 2px rgba(59,130,246,0.2); }
     </style>
 </head>
 <body>
@@ -522,6 +554,14 @@
         </div>
     </header>
 
+<div class="tab-bar">
+    <div class="tab-bar-inner">
+        <button class="tab-btn active" data-tab="deals">🔍 New Deals <span id="deals-count" class="tab-count"></span></button>
+        <button class="tab-btn" data-tab="drops">🔻 Price Drops <span id="drops-count" class="tab-count"></span></button>
+    </div>
+</div>
+
+<div class="tab-panel active" id="panel-deals">
     <main>
         <div class="controls-card">
             <div class="search-input-wrap">
@@ -547,6 +587,19 @@
             <!-- Rendered dynamically -->
         </div>
     </main>
+</div>
+
+<div class="tab-panel" id="panel-drops">
+<main>
+    <div class="controls-card">
+        <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input id="drop-search-input" type="text" placeholder="Search price drops by title or specs...">
+        </div>
+    </div>
+    <div class="grid" id="reductions-container"></div>
+</main>
+</div>
 
     <footer>
         <p>Automated with Playwright, Google Gemini & PCSpecialist Benchmarks &bull; Updated Every 4 Hours</p>
@@ -689,6 +742,7 @@
             }
 
             document.getElementById('deal-count').textContent = `${filtered.length} Live Qualifying Deals`;
+            document.getElementById('deals-count').textContent = filtered.length || '';
 
             if (filtered.length === 0) {
                 container.innerHTML = `
@@ -782,6 +836,59 @@
 
         // Initialize
         fetchLiveDeals();
+
+    // ── Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+        });
+    });
+
+    // ── Price Drops
+    let allReductions = [];
+
+    async function loadReductions() {
+        try {
+            const res = await fetch('reductions.json?t=' + Date.now());
+            if (res.ok) {
+                const data = await res.json();
+                if (Array.isArray(data)) allReductions = data;
+            }
+        } catch(e) { console.log('No reductions yet.'); }
+        renderReductions();
+    }
+
+    function renderReductions() {
+        const container = document.getElementById('reductions-container');
+        const searchVal = (document.getElementById('drop-search-input')?.value || '').toLowerCase().trim();
+        let filtered = allReductions.filter(d => !searchVal || d.title.toLowerCase().includes(searchVal));
+        document.getElementById('drops-count').textContent = filtered.length ? filtered.length : '';
+        if (filtered.length === 0) {
+            container.innerHTML = '<div class="empty"><h3>No price drops tracked yet</h3><p>Run priceDrop_scraper.py to start tracking Gumtree price reductions automatically.</p></div>';
+            return;
+        }
+        container.innerHTML = filtered.map((d, i) => {
+            const pct = d.drop_pct || Math.round((d.drop / d.old_price) * 100);
+            return `<div class="card drop-card">
+                <div class="drop-badge">🔻 ${pct}% PRICE DROP</div>
+                <h2 class="card-title" title="${d.title}">${d.title}</h2>
+                <div class="drop-price-row">
+                    <span class="old-price">&pound;${d.old_price.toLocaleString()}</span>
+                    <span class="price-arrow">&rarr;</span>
+                    <span class="new-price">&pound;${d.new_price.toLocaleString()}</span>
+                </div>
+                <div class="drop-saving">&pound;${d.drop.toLocaleString()} cheaper (${pct}% reduction)</div>
+                <div class="drop-date">&nbsp;Dropped: ${d.date_dropped || 'Recently'}</div>
+                <a href="${d.url}" target="_blank" rel="noopener" class="card-btn">View on Gumtree &rarr;</a>
+            </div>`;
+        }).join('');
+    }
+
+    document.getElementById('drop-search-input')?.addEventListener('input', renderReductions);
+    loadReductions();
     </script>
 </body>
 </html>
