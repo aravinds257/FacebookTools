@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "**CPU:** AMD Ryzen 7 7800X3D<br>**GPU:** Nvidia GeForce RTX 3080 12GB<br>**RAM:** 32GB DDR5<br>**Storage:** 2TB NVMe SSD",
+    "price": 1350,
+    "newPrice": 1780,
+    "savings": 430,
+    "rating": 8.8,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "**CPU:** AMD Ryzen 7 7800X3D<br>**GPU:** Nvidia GeForce RTX 3080 12GB<br>**RAM:** 32GB DDR5<br>**Storage:** 2TB NVMe SSD",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "London",
+    "verdict": "Exceptional gaming foundation featuring the class-leading 7800X3D on the long-lived AM5 socket with top-tier multi-gen CPU upgradeability, capable 1440p/4K GPU power, and \u00a3430 in savings over a new PCSpecialist build.",
+    "date_added": "2026-08-25",
+    "url": "https://www.facebook.com/marketplace/item/1042241661747715/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-08-25 21:04 UTC"
+  },
+  {
+    "id": "1",
     "title": "Intel Core i7-12700K (LGA1700), RTX 3060 12GB, 32GB DDR5 RAM, 500GB NVMe SSD, Mini-ITX Motherboard (PCIe 4.0 support)",
     "price": 740,
     "newPrice": 1150,
