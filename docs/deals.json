@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "Ryzen 7 9700X, RTX 5070, 32GB DDR5, PCIe 4.0/5.0 AM5 Motherboard",
+    "price": 1325,
+    "newPrice": 1750,
+    "savings": 425,
+    "rating": 9.0,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "Ryzen 7 9700X, RTX 5070, 32GB DDR5, PCIe 4.0/5.0 AM5 Motherboard",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Grays (Near London)",
+    "verdict": "Scoring 9.0/10 due to the cutting-edge AM5 socket and next-gen RTX 5070 offering a fantastic upgrade path and substantial \u00a3425 savings over a new custom build.",
+    "date_added": "2026-08-26",
+    "url": "https://www.facebook.com/marketplace/item/1677255336668635/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-08-26 23:00 UTC"
+  },
+  {
+    "id": "1",
     "title": "Ryzen 7 9800X3D, 32GB DDR5 RAM, 1TB NVMe SSD, 850W PSU, No GPU",
     "price": 1350,
     "newPrice": 1650,
