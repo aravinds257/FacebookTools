@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "Ryzen 7 9800X3D, 32GB DDR5 RAM, 1TB NVMe SSD, 850W PSU, No GPU",
+    "price": 1350,
+    "newPrice": 1650,
+    "savings": 300,
+    "rating": 9.0,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "Ryzen 7 9800X3D, 32GB DDR5 RAM, 1TB NVMe SSD, 850W PSU, No GPU",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "London, United Kingdom",
+    "verdict": "Incredible value featuring the top-tier AM5 socket and a phenomenal 9800X3D gaming CPU with a clear upgrade path, though it requires adding your own GPU.",
+    "date_added": "2026-08-26",
+    "url": "https://www.facebook.com/marketplace/item/2214340086079968/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-08-26 20:21 UTC"
+  },
+  {
+    "id": "1",
     "title": "**CPU:** AMD Ryzen 7 7800X3D<br>**GPU:** Nvidia GeForce RTX 3080 12GB<br>**RAM:** 32GB DDR5<br>**Storage:** 2TB NVMe SSD",
     "price": 1350,
     "newPrice": 1780,
