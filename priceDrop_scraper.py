@@ -10,12 +10,21 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from playwright.async_api import async_playwright
 
-# -- Load .env file if present (optional dependency)
-try:
-    from dotenv import load_dotenv
-    load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
-except ImportError:
-    pass  # python-dotenv not installed; fall back to system env vars
+# ── Inline .env loader (no python-dotenv needed)
+def _load_dotenv():
+    env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+    if os.path.exists(env_path):
+        with open(env_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                k, v = line.split("=", 1)
+                k = k.strip(); v = v.strip().strip("'\"")
+                if k and k not in os.environ:
+                    os.environ[k] = v
+
+_load_dotenv()
 
 # -- Constants
 SCRIPT_DIR      = os.path.dirname(os.path.abspath(__file__))
@@ -24,7 +33,10 @@ TRACKED_FILE    = os.path.join(SCRIPT_DIR, "tracked_prices.json")
 REDUCTIONS_FILE = os.path.join(SCRIPT_DIR, "docs", "reductions.json")
 NOTIFICATION_EMAIL = "aravinds.257@gmail.com"
 
-# -- JS extractor shared between search pages
+# -- JS extractor: pulls price + URL + title from Gumtree search results.
+# Gumtree renders a short numeric badge ("11", "3" etc.) as the FIRST text
+# node inside each listing anchor — so we skip lines that are purely numeric
+# or too short and pick the first real-looking title line instead.
 _EXTRACT_JS = r"""
 () => {
     const results = [];
@@ -38,13 +50,25 @@ _EXTRACT_JS = r"""
             const price = parseInt(priceMatch[1].replace(/,/g,''), 10);
             if (price >= 100 && price <= 3000) {
                 seen.add(href);
-                results.push({url: href, price: price, title: text.split('\n')[0].trim().substring(0,120)});
+                // Find the first line that looks like a real title
+                // (skip numeric-only lines or very short lines)
+                const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+                let title = '';
+                for (const line of lines) {
+                    if (line.length > 10 && !/^\d+$/.test(line) && !line.startsWith('\u00a3')) {
+                        title = line.substring(0, 120);
+                        break;
+                    }
+                }
+                if (!title) title = lines.find(l => l.length > 3) || 'Unknown';
+                results.push({url: href, price: price, title: title});
             }
         }
     });
     return results;
 }
 """
+
 
 
 def load_tracked() -> dict:
