@@ -420,6 +420,10 @@ async def fetch_facebook_items(page, search_query: str, location_slug: str, radi
             itemLinks.forEach(a => {
                 const text = a.innerText ? a.innerText.trim() : '';
                 const href = a.href;
+                const lower = text.toLowerCase();
+                if (lower.includes('out of stock') || lower.includes('sold') || lower.includes('pending sale') || lower.includes('no longer available')) {
+                    return; // Skip sold or out-of-stock items immediately
+                }
                 const isUS = text.includes('$') || text.includes(', CA') || text.includes('California');
                 if (text && text.length > 5 && !uniqueListings.has(href) && !isUS) {
                     if (text.includes('£') || text.includes('Free') || text.includes('Kingdom') || text.includes('London')) {
@@ -567,10 +571,11 @@ Include ALL of these columns in this exact order:
     else:
         raise ImportError("No Google GenAI SDK installed.")
 
-def prune_sold_listings():
+async def prune_sold_listings(page=None):
     """
-    Checks every deal URL in deals.json and removes any that are sold or gone.
-    Works for both Gumtree and Facebook via HTTP — checks for 404 or sold page text.
+    Checks every deal URL in deals.json and removes any that are sold or out of stock:
+    - Gumtree: HTTP checks via urllib (fast)
+    - Facebook: Playwright checks (renders React DOM to inspect text for 'out of stock', 'sold', etc.)
     """
     repo_root = os.path.dirname(os.path.abspath(__file__))
     json_path = os.path.join(repo_root, "docs", "deals.json")
@@ -584,7 +589,7 @@ def prune_sold_listings():
     if not deals:
         return
 
-    print(f"[Prune] Checking {len(deals)} deal(s) for sold/removed listings...", flush=True)
+    print(f"[Prune] Checking {len(deals)} deal(s) for sold/removed/out-of-stock listings...", flush=True)
 
     SOLD_SIGNALS = [
         # Sold / removed signals
@@ -608,48 +613,83 @@ def prune_sold_listings():
 
     active = []
     removed = 0
+    created_browser = False
+    p_instance = None
+    browser = None
 
-    for deal in deals:
-        url = deal.get('url', '#').split('?')[0]  # Strip tracking params
-        if not url or url == '#' or not url.startswith('http'):
-            active.append(deal)
-            continue
+    if page is None:
+        p_instance = await async_playwright().start()
+        browser = await p_instance.chromium.launch(
+            headless=True,
+            args=["--no-sandbox", "--disable-blink-features=AutomationControlled"]
+        )
+        ctx = await browser.new_context(
+            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+            viewport={"width": 1280, "height": 800},
+            locale="en-GB"
+        )
+        page = await ctx.new_page()
+        created_browser = True
 
-        try:
-            req = urllib.request.Request(
-                url,
-                headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
-            )
-            resp = urllib.request.urlopen(req, timeout=6)
-            content = resp.read(4000).decode('utf-8', errors='ignore').lower()
-
-            if any(signal in content for signal in SOLD_SIGNALS):
-                print(f"[Prune] ❌ Sold/removed: {deal.get('title', '')[:60]}", flush=True)
-                removed += 1
-            else:
+    try:
+        for deal in deals:
+            url = deal.get('url', '#').split('?')[0]  # Strip tracking params
+            if not url or url == '#' or not url.startswith('http'):
                 active.append(deal)
+                continue
 
-        except urllib.error.HTTPError as e:
-            if e.code in (404, 410):
-                print(f"[Prune] ❌ Gone (HTTP {e.code}): {deal.get('title', '')[:60]}", flush=True)
-                removed += 1
+            if "facebook.com" in url.lower():
+                try:
+                    await page.goto(url, wait_until="domcontentloaded", timeout=15000)
+                    await page.wait_for_timeout(2500)
+                    text = await page.evaluate("() => document.body.innerText.toLowerCase()")
+                    if any(signal in text for signal in SOLD_SIGNALS):
+                        print(f"[Prune] ❌ Sold/Out of stock (Facebook): {deal.get('title', '')[:60]}", flush=True)
+                        removed += 1
+                    else:
+                        active.append(deal)
+                except Exception as e:
+                    print(f"[Prune] ⚠️ Facebook check error ({e}) for: {deal.get('title', '')[:50]} — keeping", flush=True)
+                    active.append(deal)
             else:
-                # 403/429/5xx — can't confirm status, keep the listing
-                print(f"[Prune] ⚠️  HTTP {e.code} for: {deal.get('title', '')[:50]} — keeping", flush=True)
-                active.append(deal)
-        except Exception:
-            # Timeout or network error — keep to be safe
-            active.append(deal)
+                # Gumtree
+                try:
+                    req = urllib.request.Request(
+                        url,
+                        headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+                    )
+                    resp = urllib.request.urlopen(req, timeout=6)
+                    content = resp.read(8000).decode('utf-8', errors='ignore').lower()
+
+                    if any(signal in content for signal in SOLD_SIGNALS):
+                        print(f"[Prune] ❌ Sold/removed (Gumtree): {deal.get('title', '')[:60]}", flush=True)
+                        removed += 1
+                    else:
+                        active.append(deal)
+
+                except urllib.error.HTTPError as e:
+                    if e.code in (404, 410):
+                        print(f"[Prune] ❌ Gone (HTTP {e.code}): {deal.get('title', '')[:60]}", flush=True)
+                        removed += 1
+                    else:
+                        print(f"[Prune] ⚠️  HTTP {e.code} for: {deal.get('title', '')[:50]} — keeping", flush=True)
+                        active.append(deal)
+                except Exception:
+                    active.append(deal)
+    finally:
+        if created_browser:
+            await browser.close()
+            await p_instance.stop()
 
     if removed > 0:
         with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(active, f, indent=2)
-        print(f"[Prune] Removed {removed} sold listing(s). {len(active)} active deal(s) remain.", flush=True)
+        print(f"[Prune] Removed {removed} sold/out-of-stock listing(s). {len(active)} active deal(s) remain.", flush=True)
         try:
             subprocess.run(["git", "-C", repo_root, "add", "docs/deals.json"], check=True, capture_output=True)
             result = subprocess.run(
                 ["git", "-C", repo_root, "commit", "-m",
-                 f"Remove {removed} sold listing(s) ({datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')})"],
+                 f"Remove {removed} sold/out-of-stock listing(s) ({datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')})"],
                 check=True, capture_output=True
             )
             subprocess.run(["git", "-C", repo_root, "push"], check=True, capture_output=True)
@@ -667,8 +707,8 @@ async def run_search(query: str, api_key: str, max_price: int = 1200):
     print(f" SEARCHING GUMTREE + FACEBOOK UK PCs (MAX £{max_price}): '{query}' | London (5 miles) + Woking (20 miles)", flush=True)
     print(f"==================================================", flush=True)
 
-    # Remove any deals that have been sold/removed since the last run
-    prune_sold_listings()
+    # Remove any deals that have been sold/removed/out-of-stock since the last run
+    await prune_sold_listings()
 
     raw_listings = await fetch_both_marketplaces(search_query=query, max_price=max_price)
 
