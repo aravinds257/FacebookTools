@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 7 7700 (AM5), 32GB DDR5 RAM, RTX 5060 Ti, 3TB SSD, Custom PC Specialist Build (Standard ATX Motherboard with P",
+    "price": 1100,
+    "newPrice": 1450,
+    "savings": 350,
+    "rating": 8.5,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "AMD Ryzen 7 7700 (AM5), 32GB DDR5 RAM, RTX 5060 Ti, 3TB SSD, Custom PC Specialist Build (Standard ATX Motherboard with P",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "London, United Kingdom",
+    "verdict": "Excellent value built around the highly upgradeable AM5 socket, paired with modern DDR5, a capable mid-range GPU, and solid \u00a3350 savings over a new build.",
+    "date_added": "2026-08-30",
+    "url": "https://www.facebook.com/marketplace/item/1779323479939313/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-08-30 15:30 UTC"
+  },
+  {
+    "id": "1",
     "title": "Ryzen 5 7500F, RTX 5060 Ti 16GB, 32GB DDR5, 1TB NVMe on AM5 Motherboard (PCIe 4.0)",
     "price": 950,
     "newPrice": 1300,
