@@ -587,6 +587,7 @@ def prune_sold_listings():
     print(f"[Prune] Checking {len(deals)} deal(s) for sold/removed listings...", flush=True)
 
     SOLD_SIGNALS = [
+        # Sold / removed signals
         "no longer available",
         "this ad has been removed",
         "this ad is no longer",
@@ -597,6 +598,12 @@ def prune_sold_listings():
         "advert not found",
         "this listing has ended",
         "item unavailable",
+        # Out of stock signals
+        "out of stock",
+        "currently unavailable",
+        "not available",
+        "no longer in stock",
+        "sold out",
     ]
 
     active = []
