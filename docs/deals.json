@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 7 9800X3D, RTX 2080 Super, 32GB DDR5 RAM, AM5 Platform (PCIe 4.0/5.0 Ready)",
+    "price": 999,
+    "newPrice": 1420,
+    "savings": 421,
+    "rating": 9.2,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "AMD Ryzen 7 9800X3D, RTX 2080 Super, 32GB DDR5 RAM, AM5 Platform (PCIe 4.0/5.0 Ready)",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "London, United Kingdom",
+    "verdict": "Features the world's premier gaming CPU on the future-proof AM5 socket with fast DDR5 RAM, allowing a seamless drop-in GPU upgrade down the line while delivering immediate top-tier 1080p/1440p gaming and over \u00a3420 in savings versus a new build.",
+    "date_added": "2026-08-30",
+    "url": "https://www.facebook.com/marketplace/item/1596642208551637/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-08-30 23:01 UTC"
+  },
+  {
+    "id": "1",
     "title": "Intel Core i5-14600KF, RTX 5070 OC, 24GB DDR5 RAM (7200MHz), 2x 1TB High-End NVMe SSDs, Z790/B760 LGA1700 Motherboard wi",
     "price": 1350,
     "newPrice": 1650,
