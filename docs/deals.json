@@ -1,23 +1,6 @@
 [
   {
     "id": "1",
-    "title": "AMD Ryzen 7 7800X3D, NVIDIA RTX 4070, 32GB DDR5 RAM, 2TB NVMe SSD, AM5 Motherboard (PCIe 4.0/5.0 support, standard ATX u",
-    "price": 1500,
-    "newPrice": 1850,
-    "savings": 350,
-    "rating": 9.0,
-    "platform": "gumtree",
-    "socket": "am5",
-    "specs": "AMD Ryzen 7 7800X3D, NVIDIA RTX 4070, 32GB DDR5 RAM, 2TB NVMe SSD, AM5 Motherboard (PCIe 4.0/5.0 support, standard ATX u",
-    "motherboard": "AMD AM5 (Upgradeable 2027+)",
-    "location": "Southgate, London",
-    "verdict": "Excellent value on the AM5 socket featuring the ultimate gaming CPU, robust upgrade path, and a strong GPU, saving you \u00a3350 over a brand-new custom build.",
-    "date_added": "2026-08-29",
-    "url": "https://www.gumtree.com/p/desktop-workstation-pcs/rtx-4070-ryzen-7-7800x3d-gaming-pc-32gb-ddr5-2tb-ssd/1802122987",
-    "last_updated": "2026-08-29 19:40 UTC"
-  },
-  {
-    "id": "1",
     "title": "Ryzen 5 7500F, RTX 5060 Ti 16GB, 32GB DDR5, 1TB NVMe on AM5 Motherboard (PCIe 4.0)",
     "price": 950,
     "newPrice": 1300,
