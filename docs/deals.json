@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "Intel Core i5-14600KF, RTX 5070 OC, 24GB DDR5 RAM (7200MHz), 2x 1TB High-End NVMe SSDs, Z790/B760 LGA1700 Motherboard wi",
+    "price": 1350,
+    "newPrice": 1650,
+    "savings": 300,
+    "rating": 8.5,
+    "platform": "facebook",
+    "socket": "intel",
+    "specs": "Intel Core i5-14600KF, RTX 5070 OC, 24GB DDR5 RAM (7200MHz), 2x 1TB High-End NVMe SSDs, Z790/B760 LGA1700 Motherboard wi",
+    "motherboard": "Intel Z790 (PCIe 5.0)",
+    "location": "Tilehurst, Reading (Within Woking 20-mile radius)",
+    "verdict": "Excellent value scoring an 8.5/10 due to the modern LGA1700 socket, high-frequency DDR5 foundation, next-gen RTX 5070 OC graphics, and solid \u00a3300 savings.",
+    "date_added": "2026-08-30",
+    "url": "https://www.facebook.com/marketplace/item/2284392475737535/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-08-30 19:02 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 7 7700 (AM5), 32GB DDR5 RAM, RTX 5060 Ti, 3TB SSD, Custom PC Specialist Build (Standard ATX Motherboard with P",
     "price": 1100,
     "newPrice": 1450,
