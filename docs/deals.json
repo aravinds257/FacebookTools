@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "Intel Core i5-14400F, RTX 4070, DDR5 RAM, LGA1700 motherboard (PCIe 4.0/5.0 support). Excellent upgrade path on LGA1700 ",
+    "price": 900,
+    "newPrice": 1250,
+    "savings": 350,
+    "rating": 8.5,
+    "platform": "facebook",
+    "socket": "intel",
+    "specs": "Intel Core i5-14400F, RTX 4070, DDR5 RAM, LGA1700 motherboard (PCIe 4.0/5.0 support). Excellent upgrade path on LGA1700 ",
+    "motherboard": "Intel Z790 (PCIe 5.0)",
+    "location": "Kingston upon Thames",
+    "verdict": "Exceptional value featuring a modern LGA1700 socket, robust RTX 4070 GPU, and bundled peripherals yielding a solid \u00a3350 in savings.",
+    "date_added": "2026-08-31",
+    "url": "https://www.facebook.com/marketplace/item/1532182952014914/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-08-31 09:54 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 7 9800X3D, RTX 2080 Super, 32GB DDR5 RAM, AM5 Platform (PCIe 4.0/5.0 Ready)",
     "price": 999,
     "newPrice": 1420,
