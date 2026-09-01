@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 7 7800X3D, AMD RX 7900 GRE 16GB, 32GB DDR5, PCIe 4.0 B650 Motherboard (Standard ATX, highly upgradeable)",
+    "price": 1150,
+    "newPrice": 1550,
+    "savings": 400,
+    "rating": 9.5,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "AMD Ryzen 7 7800X3D, AMD RX 7900 GRE 16GB, 32GB DDR5, PCIe 4.0 B650 Motherboard (Standard ATX, highly upgradeable)",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "High Wycombe (Near Woking)",
+    "verdict": "Exceptional value featuring the premier AM5 gaming chip, a high-end GPU, top-tier upgrade path, and \u00a3400 in savings.",
+    "date_added": "2026-09-01",
+    "url": "https://www.facebook.com/marketplace/item/1110597341407987/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-09-01 21:12 UTC"
+  },
+  {
+    "id": "1",
     "title": "Intel Core i5-14400F, RTX 4070, DDR5 RAM, LGA1700 motherboard (PCIe 4.0/5.0 support). Excellent upgrade path on LGA1700 ",
     "price": 900,
     "newPrice": 1250,
