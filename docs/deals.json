@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 7 9800X3D, Nvidia GeForce RTX 4070 SUPER, 32GB DDR5 RAM, AM5 Motherboard (PCIe 4.0/5.0 support, standard non-O",
+    "price": 1100,
+    "newPrice": 1850,
+    "savings": 750,
+    "rating": 9.7,
+    "platform": "gumtree",
+    "socket": "am5",
+    "specs": "AMD Ryzen 7 9800X3D, Nvidia GeForce RTX 4070 SUPER, 32GB DDR5 RAM, AM5 Motherboard (PCIe 4.0/5.0 support, standard non-O",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Clapham, London",
+    "verdict": "Exceptional top-tier build on the AM5 socket offering class-leading 1440p/4K RTX 4070 Super performance, long-term AMD CPU upgrade headroom, and over \u00a3750 in savings versus buying new (ensure thorough in-person testing prior to payment).",
+    "date_added": "2026-09-02",
+    "url": "https://www.gumtree.com/p/desktop-workstation-pcs/high-end-gaming-pc-ryzen-7-9800x3d-rtx-4070-super-32gb-ddr5/1802251320",
+    "last_updated": "2026-09-02 23:04 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 7 7800X3D, AMD RX 7900 GRE 16GB, 32GB DDR5, PCIe 4.0 B650 Motherboard (Standard ATX, highly upgradeable)",
     "price": 1150,
     "newPrice": 1550,
