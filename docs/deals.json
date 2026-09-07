@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 5 8400F, RTX 5060 (Note: likely a typo in listing for RTX 4060 or placeholder, but evaluated as current mid-ra",
+    "price": 900,
+    "newPrice": 1150,
+    "savings": 250,
+    "rating": 7.5,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "AMD Ryzen 5 8400F, RTX 5060 (Note: likely a typo in listing for RTX 4060 or placeholder, but evaluated as current mid-ra",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "London, UK",
+    "verdict": "Excellent value built on the future-proof AM5 socket with PCIe 4.0 support, offering a strong CPU/platform upgrade path and a \u00a3250 saving compared to a new PCSpecialist build.",
+    "date_added": "2026-09-07",
+    "url": "https://www.facebook.com/marketplace/item/1788648778993950/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-09-07 23:05 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 5 8400F, AMD Radeon RX 7600, 32GB DDR5 RAM, AM5 Motherboard (PCIe 4.0 support)",
     "price": 1000,
     "newPrice": 1300,
