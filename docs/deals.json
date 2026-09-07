@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 5 8400F, AMD Radeon RX 7600, 32GB DDR5 RAM, AM5 Motherboard (PCIe 4.0 support)",
+    "price": 1000,
+    "newPrice": 1300,
+    "savings": 300,
+    "rating": 8.5,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "AMD Ryzen 5 8400F, AMD Radeon RX 7600, 32GB DDR5 RAM, AM5 Motherboard (PCIe 4.0 support)",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "London, United Kingdom",
+    "verdict": "Excellent value built on the modern AM5 socket with DDR5 memory, offering a strong, highly upgradeable foundation and decent GPU for \u00a3300 less than a new build.",
+    "date_added": "2026-09-07",
+    "url": "https://www.facebook.com/marketplace/item/1364146435406739/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-09-07 19:07 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 7 7700X, AMD Radeon RX 7800 XT, 48GB DDR5 RAM, PCIe 4.0 Motherboard (AM5 socket).",
     "price": 1499,
     "newPrice": 1750,
