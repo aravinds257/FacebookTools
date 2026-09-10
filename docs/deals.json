@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 9 9900X, AM5 Socket, 32GB DDR5 RAM, PCIe 4.0/5.0 Support, Dedicated GPU (unspecified), ATX Motherboard",
+    "price": 1100,
+    "newPrice": 1650,
+    "savings": 550,
+    "rating": 9.0,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "AMD Ryzen 9 9900X, AM5 Socket, 32GB DDR5 RAM, PCIe 4.0/5.0 Support, Dedicated GPU (unspecified), ATX Motherboard",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Ilford, Redbridge",
+    "verdict": "Exceptional value featuring the latest AM5 socket and a top-tier Ryzen 9 9900X processor, providing a stellar upgrade path and \u00a3550 in savings.",
+    "date_added": "2026-09-10",
+    "url": "https://www.facebook.com/marketplace/item/1030847026623798/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-09-10 20:26 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 7 9800X3D, 32GB DDR5 6000MHz CL28, NVIDIA RTX 4070 Super, 1TB NVMe, AM5 Motherboard (PCIe 4.0/5.0), Standard A",
     "price": 1325,
     "newPrice": 1650,
