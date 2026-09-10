@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 5 7600 (AM5), RTX 5060, 16GB DDR5 RAM, 1TB NVMe SSD, Windows 11, Standard ATX Motherboard (PCIe 4.0/5.0 ready)",
+    "price": 800,
+    "newPrice": 1050,
+    "savings": 250,
+    "rating": 8.5,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "AMD Ryzen 5 7600 (AM5), RTX 5060, 16GB DDR5 RAM, 1TB NVMe SSD, Windows 11, Standard ATX Motherboard (PCIe 4.0/5.0 ready)",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Ilford, Redbridge",
+    "verdict": "Exceptional value featuring the future-proof AM5 socket with great CPU/GPU balance, DDR5 support, and a \u00a3250 saving over custom-builder pricing.",
+    "date_added": "2026-09-10",
+    "url": "https://www.facebook.com/marketplace/item/1262073092738213/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-09-10 23:05 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 9 9900X, AM5 Socket, 32GB DDR5 RAM, PCIe 4.0/5.0 Support, Dedicated GPU (unspecified), ATX Motherboard",
     "price": 1100,
     "newPrice": 1650,
