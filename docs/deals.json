@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 5 7600X, Radeon RX 6800 XT 16GB, DDR5-6000 RAM, AM5 Motherboard with PCIe 4.0 support",
+    "price": 950,
+    "newPrice": 1300,
+    "savings": 350,
+    "rating": 9.0,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "AMD Ryzen 5 7600X, Radeon RX 6800 XT 16GB, DDR5-6000 RAM, AM5 Motherboard with PCIe 4.0 support",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "London, United Kingdom",
+    "verdict": "Exceptional value on the AM5 socket with a brilliant upgrade path, powerful RX 6800 XT GPU, and \u00a3350 in savings.",
+    "date_added": "2026-09-11",
+    "url": "https://www.facebook.com/marketplace/item/28445367045149261/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-09-11 23:37 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 5 7600 (AM5), RTX 5060, 16GB DDR5 RAM, 1TB NVMe SSD, Windows 11, Standard ATX Motherboard (PCIe 4.0/5.0 ready)",
     "price": 800,
     "newPrice": 1050,
