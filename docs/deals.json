@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "Intel Core i5-14600KF, RTX 4070 Super, 32GB DDR5 6400MHz, 2TB NVMe PCIe 4.0, LGA1700 (Z690/B760 standard upgradeable boa",
+    "price": 1150,
+    "newPrice": 1450,
+    "savings": 300,
+    "rating": 8.5,
+    "platform": "facebook",
+    "socket": "intel",
+    "specs": "Intel Core i5-14600KF, RTX 4070 Super, 32GB DDR5 6400MHz, 2TB NVMe PCIe 4.0, LGA1700 (Z690/B760 standard upgradeable boa",
+    "motherboard": "Intel Z790 (PCIe 5.0)",
+    "location": "Wembley, London (5 miles)",
+    "verdict": "Exceptional value featuring the LGA1700 socket with great GPU performance, solid DDR5 foundation, and \u00a3300 in savings.",
+    "date_added": "2026-09-12",
+    "url": "https://www.facebook.com/marketplace/item/2151709272086051/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-09-12 23:06 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 5 8400F, 16GB DDR5 RAM, NVIDIA RTX 3060 Ti, 960GB SSD, Standard AM5 Motherboard (PCIe 4.0, highly upgradeable)",
     "price": 800,
     "newPrice": 1100,
