@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "Intel Core i7-14700F, RTX 5060, 16GB DDR5, 1TB SSD. Standard LGA1700 motherboard with PCIe 4.0/5.0 support, offering str",
+    "price": 1100,
+    "newPrice": 1450,
+    "savings": 350,
+    "rating": 8.5,
+    "platform": "facebook",
+    "socket": "intel",
+    "specs": "Intel Core i7-14700F, RTX 5060, 16GB DDR5, 1TB SSD. Standard LGA1700 motherboard with PCIe 4.0/5.0 support, offering str",
+    "motherboard": "Intel Z790 (PCIe 5.0)",
+    "location": "London, United Kingdom",
+    "verdict": "Excellent value on an LGA1700 platform with a powerful i7-14700F and DDR5 foundation, saving you \u00a3350 over a new system.",
+    "date_added": "2026-09-13",
+    "url": "https://www.facebook.com/marketplace/item/1982051579176401/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-09-13 18:05 UTC"
+  },
+  {
+    "id": "1",
     "title": "Intel Core i5-14600KF, RTX 4070 Super, 32GB DDR5 6400MHz, 2TB NVMe PCIe 4.0, LGA1700 (Z690/B760 standard upgradeable boa",
     "price": 1150,
     "newPrice": 1450,
