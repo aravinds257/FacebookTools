@@ -119,23 +119,6 @@
     "last_updated": "2026-09-09 23:04 UTC"
   },
   {
-    "id": "2",
-    "title": "AMD Ryzen 5 7600X, AMD Radeon RX 7700 XT, 32GB DDR5 RAM, 2TB NVMe, WiFi, Bluetooth, New Case, Standard ATX AM5 Motherboa",
-    "price": 950,
-    "newPrice": 1180,
-    "savings": 230,
-    "rating": 8.5,
-    "platform": "facebook",
-    "socket": "am5",
-    "specs": "AMD Ryzen 5 7600X, AMD Radeon RX 7700 XT, 32GB DDR5 RAM, 2TB NVMe, WiFi, Bluetooth, New Case, Standard ATX AM5 Motherboa",
-    "motherboard": "AMD AM5 (Upgradeable 2027+)",
-    "location": "Dagenham, United Kingdom",
-    "verdict": "Rated 8.5/10 thanks to the future-proof AM5 socket and great mid-range RX 7700 XT GPU, offering a balanced upgrade path and solid \u00a3230 savings compared to a fresh system build.",
-    "date_added": "2026-09-09",
-    "url": "https://www.facebook.com/marketplace/item/1744818166724972/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
-    "last_updated": "2026-09-09 23:04 UTC"
-  },
-  {
     "id": "1",
     "title": "AMD Ryzen 5 8400F, RTX 5060 (Note: likely a typo in listing for RTX 4060 or placeholder, but evaluated as current mid-ra",
     "price": 900,
