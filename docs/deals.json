@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 7 7700X, RTX 4070 12GB, 32GB DDR5, 2TB SSD, Standard ATX Motherboard (AM5)",
+    "price": 950,
+    "newPrice": 1450,
+    "savings": 500,
+    "rating": 9.2,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "AMD Ryzen 7 7700X, RTX 4070 12GB, 32GB DDR5, 2TB SSD, Standard ATX Motherboard (AM5)",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Bexley",
+    "verdict": "Excellent value on the AM5 platform with a powerful RTX 4070, offering an exceptional upgrade path and a massive \u00a3500 saving over a new retail build.",
+    "date_added": "2026-09-14",
+    "url": "https://www.facebook.com/marketplace/item/1031524503276451/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-09-14 19:26 UTC"
+  },
+  {
+    "id": "1",
     "title": "Intel Core i7-14700F, RTX 5060, 16GB DDR5, 1TB SSD. Standard LGA1700 motherboard with PCIe 4.0/5.0 support, offering str",
     "price": 1100,
     "newPrice": 1450,
