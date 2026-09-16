@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "AMD Ryzen 9 7900X, NVIDIA RTX 4070, 32GB DDR5 RAM, 2TB SSD, AM5 Motherboard (PCIe 4.0/5.0 support, excellent platform up",
+    "price": 1300,
+    "newPrice": 1650,
+    "savings": 350,
+    "rating": 9.0,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "AMD Ryzen 9 7900X, NVIDIA RTX 4070, 32GB DDR5 RAM, 2TB SSD, AM5 Motherboard (PCIe 4.0/5.0 support, excellent platform up",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Ashford / Slough",
+    "verdict": "Scores 9.0/10 because it features the future-proof AM5 socket with robust DDR5 support, a powerful RTX 4070, and solid savings of \u00a3350 over a brand-new custom build.",
+    "date_added": "2026-09-16",
+    "url": "https://www.facebook.com/marketplace/item/1621781309282280/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-09-16 11:08 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 9 9900X, 32GB DDR5 RAM, Radeon RX 7700 XT 12GB, AM5 Motherboard with PCIe 4.0/5.0 support and standard ATX upg",
     "price": 1100,
     "newPrice": 1500,
@@ -830,23 +847,6 @@
     "verdict": "Phenomenal AM5 platform with long-term CPU upgrade support through 2027+, paired with a massive 24GB RTX 3090 workstation GPU that yields over \u00a3550 in savings.",
     "date_added": "2026-08-19",
     "url": "https://www.facebook.com/marketplace/item/1316118783673404/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
-    "last_updated": "2026-08-19 19:00 UTC"
-  },
-  {
-    "id": "2",
-    "title": "**CPU:** Intel Core i5-13600K (14 Cores / 20 Threads)<br>**GPU:** NVIDIA RTX 4060 8GB<br>**RAM:** 32GB High-Speed RAM<br",
-    "price": 700,
-    "newPrice": 1150,
-    "savings": 450,
-    "rating": 8.8,
-    "platform": "facebook",
-    "socket": "intel",
-    "specs": "**CPU:** Intel Core i5-13600K (14 Cores / 20 Threads)<br>**GPU:** NVIDIA RTX 4060 8GB<br>**RAM:** 32GB High-Speed RAM<br",
-    "motherboard": "Intel Z790 (PCIe 5.0)",
-    "location": "London, UK",
-    "verdict": "Exceptional sub-\u00a3800 value on a powerful 14-core LGA1700 platform with modern RTX 40-series features and high-tier Samsung Gen4 storage, saving you \u00a3450 over retail.",
-    "date_added": "2026-08-19",
-    "url": "https://www.facebook.com/marketplace/item/1024850740404637/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
     "last_updated": "2026-08-19 19:00 UTC"
   }
 ]
