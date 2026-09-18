@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "CUSTOM AM5 GAMING PC \u2013 RX 6800 / 32GB DDR5 / LCD SCREEN (PCIe 4.0/5.0 ATX Motherboard)",
+    "price": 1300,
+    "newPrice": 1650,
+    "savings": 350,
+    "rating": 8.5,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "CUSTOM AM5 GAMING PC \u2013 RX 6800 / 32GB DDR5 / LCD SCREEN (PCIe 4.0/5.0 ATX Motherboard)",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Woking",
+    "verdict": "Excellent AM5 socket foundation offering a great multi-gen CPU upgrade path, paired with a solid RX 6800 GPU and strong \u00a3350 savings.",
+    "date_added": "2026-09-18",
+    "url": "https://www.facebook.com/marketplace/item/999624619804764/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-09-18 07:06 UTC"
+  },
+  {
+    "id": "1",
     "title": "AMD Ryzen 9 7900X, NVIDIA RTX 4070, 32GB DDR5 RAM, 2TB SSD, AM5 Motherboard (PCIe 4.0/5.0 support, excellent platform up",
     "price": 1300,
     "newPrice": 1650,
@@ -831,22 +848,5 @@
     "date_added": "2026-08-19",
     "url": "https://www.facebook.com/marketplace/item/2151589959071529/",
     "last_updated": "2026-08-19 23:00 UTC"
-  },
-  {
-    "id": "1",
-    "title": "**CPU:** AMD Ryzen 5 7600X<br>**GPU:** NVIDIA RTX 3090 Founders Edition (24GB VRAM)<br>**RAM:** 32GB DDR5<br>**Storage:*",
-    "price": 1295,
-    "newPrice": 1850,
-    "savings": 555,
-    "rating": 9.5,
-    "platform": "facebook",
-    "socket": "am5",
-    "specs": "**CPU:** AMD Ryzen 5 7600X<br>**GPU:** NVIDIA RTX 3090 Founders Edition (24GB VRAM)<br>**RAM:** 32GB DDR5<br>**Storage:*",
-    "motherboard": "AMD AM5 (Upgradeable 2027+)",
-    "location": "London, UK",
-    "verdict": "Phenomenal AM5 platform with long-term CPU upgrade support through 2027+, paired with a massive 24GB RTX 3090 workstation GPU that yields over \u00a3550 in savings.",
-    "date_added": "2026-08-19",
-    "url": "https://www.facebook.com/marketplace/item/1316118783673404/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
-    "last_updated": "2026-08-19 19:00 UTC"
   }
 ]
