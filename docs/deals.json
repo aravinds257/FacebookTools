@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "DDR5 Desktop Gaming System (Modern AM5 / LGA1700 platform with high-bandwidth DDR5 bus, PCIe 4.0/5.0 support, standard A",
+    "price": 1350,
+    "newPrice": 1620,
+    "savings": 270,
+    "rating": 6.9,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "DDR5 Desktop Gaming System (Modern AM5 / LGA1700 platform with high-bandwidth DDR5 bus, PCIe 4.0/5.0 support, standard A",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Maldon, Essex",
+    "verdict": "Offers a clean entry into current-generation DDR5 architecture and long-term CPU upgrade paths, though tighter margins against prebuilt retail pricing make room for negotiation.",
+    "date_added": "2026-09-21",
+    "url": "https://www.facebook.com/marketplace/item/1767932121178879/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-09-21 20:25 UTC"
+  },
+  {
+    "id": "1",
     "title": "CUSTOM AM5 GAMING PC \u2013 RX 6800 / 32GB DDR5 / LCD SCREEN (PCIe 4.0/5.0 ATX Motherboard)",
     "price": 1300,
     "newPrice": 1650,
