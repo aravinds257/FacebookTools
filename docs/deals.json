@@ -1,6 +1,23 @@
 [
   {
     "id": "1",
+    "title": "Ryzen 5 7600, RTX 5060, 32GB DDR5 RAM, 1TB NVMe SSD, AM5 Motherboard (PCIe 4.0/5.0 support, standard ATX/mATX upgrade pa",
+    "price": 900,
+    "newPrice": 1250,
+    "savings": 350,
+    "rating": 8.5,
+    "platform": "facebook",
+    "socket": "am5",
+    "specs": "Ryzen 5 7600, RTX 5060, 32GB DDR5 RAM, 1TB NVMe SSD, AM5 Motherboard (PCIe 4.0/5.0 support, standard ATX/mATX upgrade pa",
+    "motherboard": "AMD AM5 (Upgradeable 2027+)",
+    "location": "Colchester, Essex",
+    "verdict": "Excellent value featuring the future-proof AM5 socket and DDR5 RAM, offering a great upgrade path and solid modern GPU performance while saving you \u00a3350.",
+    "date_added": "2026-09-25",
+    "url": "https://www.facebook.com/marketplace/item/1660355352153736/?ref=search&referral_code=null&referral_story_type=post&__tn__=!%3AD",
+    "last_updated": "2026-09-25 11:05 UTC"
+  },
+  {
+    "id": "1",
     "title": "Ryzen 7 7700X, RTX 4070, 32GB DDR5, 2TB Samsung 990 Pro NVMe, PCIe 4.0/5.0 compatible AM5 Motherboard",
     "price": 1400,
     "newPrice": 1750,
@@ -830,23 +847,6 @@
     "verdict": "Outstanding top-tier value on the brand-new AMD AM5 socket with next-gen Zen 5 architecture, offering unmatched drop-in upgrade longevity through 2027+, solid mid-tier GPU performance, and \u00a3370 in savings.",
     "date_added": "2026-08-20",
     "url": "https://www.facebook.com/marketplace/item/1070587198793841/",
-    "last_updated": "2026-08-20 23:00 UTC"
-  },
-  {
-    "id": "2",
-    "title": "**CPU:** Intel Core i5 14th Gen<br>**RAM:** DDR5 / DDR4 Compatible<br>**Motherboard:** Intel LGA1700 (B760 / Z790)<br>**",
-    "price": 350,
-    "newPrice": 720,
-    "savings": 370,
-    "rating": 8.5,
-    "platform": "facebook",
-    "socket": "intel",
-    "specs": "**CPU:** Intel Core i5 14th Gen<br>**RAM:** DDR5 / DDR4 Compatible<br>**Motherboard:** Intel LGA1700 (B760 / Z790)<br>**",
-    "motherboard": "Intel Z790 (PCIe 5.0)",
-    "location": "London, UK",
-    "verdict": "Excellent low-entry platform on the Intel LGA1700 socket that provides an affordable foundation ready for a dedicated PCIe Gen 4/5 GPU upgrade down the line while pocketing \u00a3370 in savings.",
-    "date_added": "2026-08-20",
-    "url": "https://www.facebook.com/marketplace/item/2267452267390421/",
     "last_updated": "2026-08-20 23:00 UTC"
   }
 ]
